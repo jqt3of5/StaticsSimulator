@@ -1,0 +1,41 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="StaticsTest.cs">
+    <Files>
+      <File FileName="Beam.cs" Line="44" Column="5" />
+      <File FileName="SPoint.cs" Line="11" Column="19" />
+      <File FileName="Force.cs" Line="19" Column="4" />
+      <File FileName="StaticsTest.cs" Line="21" Column="4" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Statics_Simulator_Linux" expanded="True">
+            <Node name="StaticsTest.cs" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+      <Pad Id="MonoDevelop.NUnit.TestPad">
+        <State expanded="True">
+          <Node name="Statics_Simulator_Linux" expanded="True">
+            <Node name="Statics_Simulator_Linux" expanded="True">
+              <Node name="StaticsTest" expanded="True">
+                <Node name="crossTest" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
