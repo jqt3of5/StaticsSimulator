@@ -89,7 +89,6 @@
     <Compile Include="SPoint.cs" />
     <Compile Include="Force.cs" />
     <Compile Include="StaticsTest.cs" />
-    <Compile Include="Prop.cs" />
     <Compile Include="Moment.cs" />
     <Compile Include="StaticMath.cs" />
   </ItemGroup>

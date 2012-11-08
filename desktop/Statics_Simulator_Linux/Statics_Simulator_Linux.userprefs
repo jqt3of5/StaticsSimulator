@@ -1,22 +1,26 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="StaticsTest.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="StaticMath.cs">
     <Files>
-      <File FileName="Beam.cs" Line="44" Column="5" />
-      <File FileName="SPoint.cs" Line="11" Column="19" />
-      <File FileName="Force.cs" Line="19" Column="4" />
-      <File FileName="StaticsTest.cs" Line="21" Column="4" />
+      <File FileName="Beam.cs" Line="43" Column="25" />
+      <File FileName="SPoint.cs" Line="16" Column="4" />
+      <File FileName="Force.cs" Line="10" Column="3" />
+      <File FileName="StaticsTest.cs" Line="66" Column="55" />
+      <File FileName="Moment.cs" Line="9" Column="3" />
+      <File FileName="StaticMath.cs" Line="76" Column="43" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Statics_Simulator_Linux" expanded="True">
-            <Node name="StaticsTest.cs" selected="True" />
+            <Node name="StaticMath.cs" selected="True" />
           </Node>
         </State>
       </Pad>
       <Pad Id="ClassPad">
-        <State expanded="True" selected="True" />
+        <State expanded="True" selected="True">
+          <Node name="Statics_Simulator_Linux" expanded="True" />
+        </State>
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State />
@@ -26,7 +30,7 @@
           <Node name="Statics_Simulator_Linux" expanded="True">
             <Node name="Statics_Simulator_Linux" expanded="True">
               <Node name="StaticsTest" expanded="True">
-                <Node name="crossTest" selected="True" />
+                <Node name="multiForceTest" selected="True" />
               </Node>
             </Node>
           </Node>

@@ -2,20 +2,14 @@ using System;
 
 namespace Statics_Simulator_Linux
 {
-	public class Moment : Prop
+	public class Moment
 	{
 		public double magnitude;
+		public SPoint cPoint;	
 		
-		public Moment()
+		public Moment(double mag, SPoint pt)
 		{
-			magnitude = 0;
-		}
-		public Moment(double mag) : base("", true)
-		{
-			magnitude = mag;
-		}
-		public Moment (double mag, String name) : base(name,true)
-		{
+			cPoint = pt;
 			magnitude = mag;
 		}
 	}

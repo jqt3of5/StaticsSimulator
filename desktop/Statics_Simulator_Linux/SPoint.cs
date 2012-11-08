@@ -8,31 +8,11 @@ namespace Statics_Simulator_Linux
 		public double y;
 		public String name; 
 		
-		public ArrayList forces;
-		public Moment moment;
-		
 		public SPoint(double x, double y, String name)
 		{
 			this.x = x;
 			this.y = y;
 			this.name = name;
-			
-			forces = new ArrayList();
-			
-			moment = new Moment(0);
-		}
-		public bool hasUnknownForces()
-		{
-			foreach(Force f in forces)
-			{
-				if (!f.known)
-					return true;
-			}
-			return false;
-		}
-		public void addForce(Force p)
-		{
-			forces.Add(p);
 		}
 	
 		public double distance(SPoint pt)

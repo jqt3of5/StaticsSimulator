@@ -2,30 +2,21 @@ using System;
 
 namespace Statics_Simulator_Linux
 {
-	public class Force : Prop
+	public class Force
 	{
 		public double magnitude;
 		public double direction;
+		public SPoint cPoint;
 		
-		public Force() : base ("", false)
+		public Force(double dir, SPoint pt) 
 		{
-			magnitude = 1;
-			//this assumes directions are positive... :/
-			direction = -1;
-		}
-		
-		public Force(double dir) : base("", false)
-		{
+			cPoint = pt;
 			magnitude = 1;
 			direction = dir;
 		}
-		public Force(double mag, double dir) : base("", true)
+		public Force(double mag, double dir, SPoint pt)
 		{
-			magnitude = mag;
-			direction = dir;
-		}
-		public Force (double mag, double dir, String name) : base(name,true)
-		{
+			cPoint = pt;
 			magnitude = mag;
 			direction = dir;
 		}

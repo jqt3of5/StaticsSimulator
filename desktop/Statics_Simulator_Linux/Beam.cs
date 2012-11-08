@@ -11,7 +11,10 @@ namespace Statics_Simulator_Linux
 		public double  length;
 		
 		//this should probably be a hash table....
-		public ArrayList connectPoints;
+		public ArrayList points;
+		public ArrayList forces;
+		public ArrayList moments;
+		public ArrayList anchors;
 		
 		public Beam(SPoint A, SPoint B)
 		{
@@ -24,37 +27,40 @@ namespace Statics_Simulator_Linux
 				endPointB = A;
 			}
 			
-			connectPoints = new ArrayList();
+			points = new ArrayList();
+			forces = new ArrayList();
+			moments = new ArrayList();
+			anchors = new ArrayList();
 			
-			connectPoints.Add(endPointA);
-			connectPoints.Add(endPointB);
+			points.Add(endPointA);
+			points.Add(endPointB);
 			
 			length = endPointA.distance(endPointB);
 		}
 		
-		public SPoint getConnectingPoint(String name)
+		public SPoint getPoint(String name)
 		{
-			foreach(SPoint p in connectPoints)
+			foreach(SPoint p in points)
 			{
 				if (p.name == name)
 					return p;
 			}
 			return null;
 		}
-		public void addConnectingPoint(SPoint pt)
+		
+		public void addPoint(SPoint pt)
 		{
 			//need to verify that this point is along the beam
 			double m = (endPointA.y-endPointB.y)/(endPointA.x-endPointB.x);
 			
 			//since this is floating point arithmetic, we will have errors. 
 			// So compare within some amount of error
-			if (Math.Abs((pt.y - endPointA.y) - m*(pt.x-endPointA.x)) < .01 
-			    && pt.x >= endPointA.x && pt.x <= endPointB.x)
+			if ((pt.y - endPointA.y) != m*(pt.x-endPointA.x) 
+			    || pt.x < endPointA.x || pt.x > endPointB.x)
 			{
-				connectPoints.Add(pt);	
-			}
-			else
 				throw new Exception("Attempted to add a point not on the beam");
+			}
+			points.Add(pt);	
 		}
 	}
 }
