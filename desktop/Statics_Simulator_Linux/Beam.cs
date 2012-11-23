@@ -3,44 +3,37 @@ using System.Collections;
 
 namespace Statics_Simulator_Linux
 {
-	public class Beam
+	public class Beam : Structure
 	{
-		public SPoint endPointA;
-		public SPoint endPointB;
 		
-		public double  length;
+		public Point leftPoint;
+		public Point rightPoint;
+		public double length;
 		
-		//this should probably be a hash table....
-		public ArrayList points;
-		public ArrayList forces;
-		public ArrayList moments;
-		public ArrayList anchors;
-		
-		public Beam(SPoint A, SPoint B)
+		public Beam(Point A, Point B)
 		{
-			
 			if (A.x < B.x){
-				endPointA = A;
-				endPointB = B;
+				leftPoint = A;
+				rightPoint = B;
 			}else{
-				endPointA = B;
-				endPointB = A;
+				
+				leftPoint = B;
+				rightPoint = A;
 			}
+			cmPoint = new Point((rightPoint.x - leftPoint.x)/2.0 + leftPoint.x, 
+			                    (rightPoint.y - leftPoint.y)/2.0 + leftPoint.x,"CM");
 			
-			points = new ArrayList();
-			forces = new ArrayList();
-			moments = new ArrayList();
-			anchors = new ArrayList();
+			points.Add(leftPoint);
+			points.Add(rightPoint);
+			points.Add(cmPoint);
 			
-			points.Add(endPointA);
-			points.Add(endPointB);
-			
-			length = endPointA.distance(endPointB);
+			length = leftPoint.distance(rightPoint);
 		}
 		
-		public SPoint getPoint(String name)
+		
+		public override Point getPoint(String name)
 		{
-			foreach(SPoint p in points)
+			foreach(Point p in points)
 			{
 				if (p.name == name)
 					return p;
@@ -48,19 +41,22 @@ namespace Statics_Simulator_Linux
 			return null;
 		}
 		
-		public void addPoint(SPoint pt)
+	
+		public override void addPoint(Point pt)
 		{
 			//need to verify that this point is along the beam
-			double m = (endPointA.y-endPointB.y)/(endPointA.x-endPointB.x);
+			//calcualtes the slope of the beam
+			double m = (leftPoint.y-rightPoint.y)/(leftPoint.x-rightPoint.x);
 			
-			//since this is floating point arithmetic, we will have errors. 
-			// So compare within some amount of error
-			if ((pt.y - endPointA.y) != m*(pt.x-endPointA.x) 
-			    || pt.x < endPointA.x || pt.x > endPointB.x)
+			//makes sure it is on the beam
+			if ((pt.y - leftPoint.y) != m*(pt.x-leftPoint.x) 
+			    || pt.x < leftPoint.x || pt.x > rightPoint.x)
 			{
 				throw new Exception("Attempted to add a point not on the beam");
 			}
-			points.Add(pt);	
+			points.Add(pt);
+			
+			
 		}
 	}
 }

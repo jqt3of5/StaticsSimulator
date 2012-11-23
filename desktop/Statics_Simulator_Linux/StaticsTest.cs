@@ -11,138 +11,80 @@ namespace Statics_Simulator_Linux
 		{
 		}
 		
-		
+	
 		[Test]
-		public void unknownForceInsufficientTest1()
+		public void unknownForce()
 		{
-		/*	SPoint A = new SPoint(0,0, "A");
-			SPoint D = new SPoint(1,0,"D");
-			SPoint C = new SPoint(.5,0,"C");
+			Point A = new Point(0,0, "A");
+			Point B = new Point(1,0,"B");
 			
-			Beam beam = new Beam(A,D);
-			beam.addConnectingPoint(C);
+			Beam beam = new Beam(A,B);
 			
+			StaticMath.addPointToStruct(beam,new MPoint(0,Point.Type.VARIABLE, 0,0,"Ma"));
 			
-			beam.getConnectingPoint("A").addForce(new Force());
-			beam.getConnectingPoint("D").addForce(new Force(100, Math.PI/2.0));
+			StaticMath.addPointToStruct(beam, new FPoint(100, Math.PI/2.0,Point.Type.FIXED,1,0,"Fb"));
+			StaticMath.addPointToStruct(beam, new FPoint(Math.PI/2.0,0,0,"Fa"));
 			
-			beam.getConnectingPoint("C").addForce(new Force(3.0*Math.PI/2.0));
-			beam.getConnectingPoint("A").moment= new Moment(0);
+			Assert.AreEqual(100, ((MPoint)beam.getPoint("Ma")).magnitude);
 			
-			try{
-				StaticMath.calcForce(beam, "A");
-				Assert.Fail();
-			}catch (Exception e)
-			{
-				Console.WriteLine(e.Message);
-			}
+			Assert.AreEqual(false, beam.getPoint("Fa").known);
 			
 			try{
-				StaticMath.calcMoment(beam, "D");
-				Assert.Fail();
-			}catch (Exception e)
+			 	StaticMath.calcMoment(B, beam);
+			}catch(Exception e)
 			{
-				
-				Console.WriteLine(e.Message);
-			}
-		
-			Console.WriteLine("the end");
-			*/
+				return;
+			}	
+			Assert.Fail();
 		}
 		
 		[Test]
-		public void unknownMomentTest()
+		public void addingForceTest()
 		{
-			SPoint A = new SPoint(0,0, "A");
-			SPoint D = new SPoint(1,0,"D");
-			SPoint C = new SPoint(.5,0,"C");
+			Point A = new Point(0,0, "A");
+			Point B = new Point(1,0,"B");
 			
-			Beam beam = new Beam(A,D);
-			beam.addPoint(C);
+			Beam beam = new Beam(A,B);
 			
-			beam.forces.Add(new Force(100, Math.PI/2.0,A));
-			beam.forces.Add(new Force(50, Math.PI/2.0,C));
+			beam.addPoint(new MPoint(0,Point.Type.VARIABLE,0,0,"Ma"));
+			beam.addPoint(new MPoint(0,Point.Type.VARIABLE,1,0,"Mb"));
 			
-			Assert.AreEqual(200, StaticMath.calcMoment(D,beam));
-		
-		}
-		[Test]
-		public void unknownForceTest()
-		{
-			SPoint A = new SPoint(0,0, "A");
-			SPoint D = new SPoint(1,0,"D");
-			SPoint B = new SPoint(.25,0,"B");
-			SPoint C = new SPoint(.5,0,"C");
+			Assert.AreEqual(0, ((MPoint)beam.getPoint("Ma")).magnitude);
+			Assert.AreEqual(0, ((MPoint)beam.getPoint("Mb")).magnitude);
 			
-			Beam beam = new Beam(A,D);
-			beam.addPoint(C);
-			beam.addPoint(B);
+			StaticMath.addPointToStruct(beam, new FPoint(100, Math.PI/2.0, Point.Type.FIXED, 0,0,"Fa"));
+			StaticMath.addPointToStruct(beam, new FPoint(100, Math.PI/2.0, Point.Type.FIXED, 1,0,"Fb"));
 			
-			
-			
-			beam.forces.Add(new Force(100, Math.PI/2.0,A));
-			
-			beam.moments.Add (new Moment(0,D));
-			
-			
-			Assert.AreEqual(200, StaticMath.calcForce(beam, "C").magnitude);
-			Assert.AreEqual(3.0*Math.PI/2.0, StaticMath.calcForce(beam, "C").direction);
-		
-		//	Assert.AreEqual(StaticMath.calcMoment(beam, "A"), 0);
-		
-			
+			Assert.AreEqual(100, ((MPoint)beam.getPoint("Ma")).magnitude);
+			Assert.AreEqual(-100, ((MPoint)beam.getPoint("Mb")).magnitude);
 		}
 		[Test]
 		public void multiForceTest()
 		{
-			SPoint A = new SPoint(0,0, "A");
-			SPoint B = new SPoint(1,0,"B");
-			SPoint C = new SPoint(.5,0,"C");
-			
-			
-			Beam beam = new Beam(A,B);
-			beam.addPoint(C);
-			
-			beam.forces.Add (new Force(200, 3.0*Math.PI/2.0,C));
-			beam.forces.Add (new Force(100, Math.PI/2.0,B));
-			
-			
-			//beam.getConnectingPoint("A").addForce(new Force(100, Math.PI/2.0));
-			//beam.getConnectingPoint("B").addForce(new Force(100, Math.PI/2.0));
-			
-			//beam.getConnectingPoint("C").addForce(new Force(250, 3.0*Math.PI/2.0));
-			//beam.getConnectingPoint("C").addForce(new Force(50, Math.PI/2.0));
-			
-			Assert.AreEqual(0,StaticMath.calcMoment("A",beam));
-		}
-		[Test]
-		public void singleForceTest()
-		{
-			SPoint A = new SPoint(0,0, "A");
-			SPoint B = new SPoint(1,0,"B");
+			Point A = new Point(0,0, "A");
+			Point B = new Point(1,0,"B");
 			
 			Beam beam = new Beam(A,B);
 			
-			beam.forces.Add(new Force(100, Math.PI/2.0, A));
-			beam.forces.Add(new Force(50, Math.PI/2.0, B));
+			beam.addPoint(new FPoint(100, Math.PI/2.0, Point.Type.FIXED, 0,0,"Fa"));
+			beam.addPoint(new FPoint(50, Math.PI/2.0, Point.Type.FIXED, 1,0,"Fb"));
+			beam.addPoint (new MPoint(.5,0,"M"));
 			
-			Assert.AreEqual(50, StaticMath.calcMoment("A", beam));
-			Assert.AreEqual(-100, StaticMath.calcMoment("B", beam));
+			Assert.AreEqual(50, StaticMath.calcMoment("A", beam).magnitude);
+			Assert.AreEqual(-100, StaticMath.calcMoment("B", beam).magnitude);
 			
+			Assert.AreEqual(null, StaticMath.calcMoment("M",beam));
+			Assert.AreEqual(-25,((MPoint)beam.getPoint("M")).magnitude);
 		}
 		
 		[Test]
 		public void crossProductTest()
 		{
-			SPoint A = new SPoint(0,0,"A");
-			SPoint B = new SPoint(1,0,"B");
+			Point A = new Point(0,0,"A");
+			FPoint Fa = new FPoint(100, Math.PI/2.0,  Point.Type.FIXED, 1,0,"Fa");
 			
 			
-			Beam beam = new Beam(A,B);
-			
-			beam.forces.Add(new Force(100, Math.PI/2.0, B));
-			
-			Assert.AreEqual(100, StaticMath.rCrossF(A, B, beam));
+			Assert.AreEqual(100, StaticMath.rCrossF(A, Fa));
 			
 		}
 		
