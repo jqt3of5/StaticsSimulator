@@ -79,7 +79,7 @@
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
                 <child>
-                  <widget class="Gtk.IconView" id="iconview2">
+                  <widget class="Gtk.IconView" id="iconView">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
                     <property name="Columns">1</property>

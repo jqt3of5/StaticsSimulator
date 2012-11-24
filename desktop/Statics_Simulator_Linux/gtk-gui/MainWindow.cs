@@ -14,7 +14,7 @@ public partial class MainWindow
 	private global::Gtk.MenuBar menubar1;
 	private global::Gtk.VBox vbox2;
 	private global::Gtk.HBox hbox3;
-	private global::Gtk.IconView iconview2;
+	private global::Gtk.IconView iconView;
 	private global::Gtk.Notebook notebook1;
 	private global::Gtk.DrawingArea drawingarea3;
 	private global::Gtk.Label label2;
@@ -71,12 +71,12 @@ public partial class MainWindow
 		this.hbox3.Name = "hbox3";
 		this.hbox3.Spacing = 6;
 		// Container child hbox3.Gtk.Box+BoxChild
-		this.iconview2 = new global::Gtk.IconView ();
-		this.iconview2.CanFocus = true;
-		this.iconview2.Name = "iconview2";
-		this.iconview2.Columns = 1;
-		this.hbox3.Add (this.iconview2);
-		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.iconview2]));
+		this.iconView = new global::Gtk.IconView ();
+		this.iconView.CanFocus = true;
+		this.iconView.Name = "iconView";
+		this.iconView.Columns = 1;
+		this.hbox3.Add (this.iconView);
+		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.iconView]));
 		w3.Position = 0;
 		// Container child hbox3.Gtk.Box+BoxChild
 		this.notebook1 = new global::Gtk.Notebook ();

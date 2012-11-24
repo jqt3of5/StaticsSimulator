@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Statics_Simulator_Linux
 {
-	public class Beam : Structure
+	public class Beam : RigidBody
 	{
 		
 		public Point leftPoint;
@@ -12,7 +12,7 @@ namespace Statics_Simulator_Linux
 		
 		public Beam(Point A, Point B)
 		{
-			if (A.x < B.x){
+			if (A.x <= B.x){
 				leftPoint = A;
 				rightPoint = B;
 			}else{
@@ -23,23 +23,14 @@ namespace Statics_Simulator_Linux
 			cmPoint = new Point((rightPoint.x - leftPoint.x)/2.0 + leftPoint.x, 
 			                    (rightPoint.y - leftPoint.y)/2.0 + leftPoint.x,"CM");
 			
-			points.Add(leftPoint);
-			points.Add(rightPoint);
-			points.Add(cmPoint);
+			
+			base.addPoint(leftPoint);
+			base.addPoint(rightPoint);
+			base.addPoint(cmPoint);
 			
 			length = leftPoint.distance(rightPoint);
 		}
 		
-		
-		public override Point getPoint(String name)
-		{
-			foreach(Point p in points)
-			{
-				if (p.name == name)
-					return p;
-			}
-			return null;
-		}
 		
 	
 		public override void addPoint(Point pt)
@@ -54,8 +45,10 @@ namespace Statics_Simulator_Linux
 			{
 				throw new Exception("Attempted to add a point not on the beam");
 			}
-			points.Add(pt);
 			
+			//if this point is a force, the base class will clear and recalc all the moments
+			//is this what I want? I don't know..
+			base.addPoint(pt);
 			
 		}
 	}
