@@ -11,81 +11,47 @@ namespace Statics_Simulator_Linux
 		{
 		}
 		
-	
 		[Test]
-		public void unknownForce()
+		public void resolveForce()
 		{
-			Point A = new Point(0,0, "A");
-			Point B = new Point(1,0,"B");
-			
-			Beam beam = new Beam(A,B);
-			
-			beam.addPoint(new MPoint(0, 0,0,"Ma"));
-			
-			beam.addPoint(new FPoint(100, Math.PI/2.0,1,0,"Fb"));
-			beam.addPoint(new FPoint(Math.PI/2.0,0,0,"Fa"));
-			
-			Assert.AreEqual(100, ((MPoint)beam.getPoint("Ma")).magnitude);
-			
-			Assert.AreEqual(false, beam.getPoint("Fa").known);
-			
-			try{
-			 	beam.calcMoment(B);
-			}catch(Exception e)
-			{
-				return;
-			}	
-			Assert.Fail();
 		}
 		
-		[Test]
-		public void addingForceTest()
-		{
-			Point A = new Point(0,0, "A");
-			Point B = new Point(1,0,"B");
-			
-			Beam beam = new Beam(A,B);
-			
-			beam.addPoint(new MPoint(0,0,0,"Ma"));
-			beam.addPoint(new MPoint(0,1,0,"Mb"));
-			
-			Assert.AreEqual(0, ((MPoint)beam.getPoint("Ma")).magnitude);
-			Assert.AreEqual(0, ((MPoint)beam.getPoint("Mb")).magnitude);
-			
-			beam.addPoint(new FPoint(100, Math.PI/2.0, 0,0,"Fa"));
-			beam.addPoint(new FPoint(100, Math.PI/2.0, 1,0,"Fb"));
-			
-			Assert.AreEqual(100, ((MPoint)beam.getPoint("Ma")).magnitude);
-			Assert.AreEqual(-100, ((MPoint)beam.getPoint("Mb")).magnitude);
-		}
 		[Test]
 		public void multiForceTest()
 		{
-			Point A = new Point(0,0, "A");
-			Point B = new Point(1,0,"B");
+			Point A = new Point(0,0);
+			Point B = new Point (1,0);
+			Beam beam = new Beam (A, B);
+			BeamController controller = new BeamController(beam);
+					
+			controller.setInconsistentCallback(delegate(Tuple<Point, Point> moment, Point mag) {
+				Console.WriteLine("Inconsistency detected. Have " +
+				                  + moment.Item1.x + "," + moment.Item1.y + "," + moment.Item1.z	
+				                  + " needed " + mag.x + "," + mag.y + "," + mag.z);	
+			});
+			controller.setConsistentCallback( delegate(Tuple<Point, Point> moment, Point mag) {
+				Console.WriteLine("Consistent!");
+			});
 			
-			Beam beam = new Beam(A,B);
+			controller.addMoment(new Point(0,0,-25), new Point(.5,0));
+			controller.addMoment(new Point(0,0,-100), new Point(1,0));
+			controller.addMoment(new Point(0,0,50), new Point(0,0));
 			
-			beam.addPoint(new FPoint(100, Math.PI/2.0, 0,0,"Fa"));
-			beam.addPoint(new FPoint(50, Math.PI/2.0, 1,0,"Fb"));
-			beam.addPoint (new MPoint(.5,0,"M"));
+			controller.addForce(new Point(0, 100), new Point(0,0));
+			controller.addForce(new Point(0, 50), new Point(1,0));
 			
-			Assert.AreEqual(50, beam.calcMoment("A").magnitude);
-			Assert.AreEqual(-100, beam.calcMoment("B").magnitude);
-			
-			Assert.AreEqual(null, beam.calcMoment("M"));
-			Assert.AreEqual(-25,((MPoint)beam.getPoint("M")).magnitude);
 		}
 		
 		[Test]
-		public void crossProductTest()
+		public void PointTest()
 		{
-			Point A = new Point(0,0,"A");
-			FPoint Fa = new FPoint(100, Math.PI/2.0, 1,0,"Fa");
+			Point A = new Point(3,10);
+			Point Fa = new Point(10, 4);
 			
-			
-			Assert.AreEqual(100, A.rCrossF(Fa));
-			
+			Assert.AreEqual(-88, A*Fa);
+			Assert.AreEqual(Math.Sqrt(13*13+14*14), (A+Fa).mag ());
+			Assert.AreEqual(Math.Sqrt(7*7+6*6), (A-Fa).mag ());
+	
 		}
 		
 	}

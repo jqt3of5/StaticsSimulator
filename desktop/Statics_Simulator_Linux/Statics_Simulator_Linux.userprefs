@@ -1,34 +1,43 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Beam.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="RigidBody.cs">
     <Files>
-      <File FileName="Beam.cs" Line="53" Column="5" />
-      <File FileName="SPoint.cs" Line="17" Column="33" />
-      <File FileName="Force.cs" Line="13" Column="38" />
-      <File FileName="StaticsTest.cs" Line="66" Column="55" />
-      <File FileName="Moment.cs" Line="7" Column="27" />
-      <File FileName="StaticMath.cs" Line="145" Column="1" />
-      <File FileName="Structure.cs" Line="15" Column="47" />
-      <File FileName="Attribute.cs" Line="11" Column="20" />
+      <File FileName="StaticsTest.cs" Line="24" Column="23" />
+      <File FileName="MainWindow.cs" Line="15" Column="31" />
+      <File FileName="RigidBody.cs" Line="111" Column="7" />
+      <File FileName="Beam.cs" Line="25" Column="4" />
+      <File FileName="MPoint.cs" Line="19" Column="20" />
+      <File FileName="Point.cs" Line="20" Column="19" />
+      <File FileName="FPoint.cs" Line="8" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Statics_Simulator_Linux" expanded="True">
-            <Node name="Beam.cs" selected="True" />
+            <Node name="UserInterface" expanded="True" />
+            <Node name="RigidBody.cs" selected="True" />
           </Node>
         </State>
       </Pad>
       <Pad Id="ClassPad">
-        <State expanded="True" selected="True">
-          <Node name="Statics_Simulator_Linux" expanded="True" />
+        <State expanded="True">
+          <Node name="Statics_Simulator_Linux" expanded="True">
+            <Node name="Statics_Simulator_Linux" expanded="True" />
+            <Node name="Stetic" expanded="True" />
+          </Node>
         </State>
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State />
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True" selected="True" />
+        <State expanded="True">
+          <Node name="Statics_Simulator_Linux" expanded="True">
+            <Node name="Statics_Simulator_Linux" expanded="True">
+              <Node name="StaticsTest" expanded="True" selected="True" />
+            </Node>
+          </Node>
+        </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
