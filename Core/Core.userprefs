@@ -1,0 +1,20 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/JointController.cs">
+    <Files>
+      <File FileName="Controllers/RigidBodyController.cs" Line="2" Column="12" />
+      <File FileName="Controllers/PivotController.cs" Line="2" Column="12" />
+      <File FileName="Controllers/JointController.cs" Line="2" Column="12" />
+      <File FileName="Controllers/BeamController.cs" Line="2" Column="12" />
+      <File FileName="Data/Beam.cs" Line="4" Column="15" />
+      <File FileName="Data/Matrix.cs" Line="3" Column="15" />
+      <File FileName="Data/Pivot.cs" Line="3" Column="15" />
+      <File FileName="Data/Point.cs" Line="3" Column="15" />
+      <File FileName="Data/RigidBody.cs" Line="3" Column="15" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
