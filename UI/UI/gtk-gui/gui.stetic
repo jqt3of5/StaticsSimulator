@@ -7,6 +7,7 @@
   <import>
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../../../../../../../usr/lib/monodevelop/AddIns/MonoDevelop.GtkCore/libstetic.dll" />
+    <widget-library name="../../../bin/Debug/ViewModel.dll" />
     <widget-library name="../../../bin/Debug/UI.exe" internal="true" />
   </import>
   <widget class="Gtk.Window" id="MainWindow" design-size="480 360">
@@ -78,6 +79,32 @@
         <property name="Value">0</property>
         <property name="Group">group1</property>
       </action>
+      <action id="firstAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-goto-bottom</property>
+      </action>
+      <action id="secondAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-goto-first</property>
+      </action>
+      <action id="thirdAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-goto-last</property>
+      </action>
+      <action id="fourthAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-go-back</property>
+      </action>
+      <action id="fifthAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Down</property>
+        <property name="ShortLabel" translatable="yes">_Down</property>
+        <property name="StockId">gtk-go-down</property>
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
@@ -90,7 +117,7 @@
         <child>
           <widget class="Gtk.MenuBar" id="menubar2">
             <property name="MemberName" />
-            <node name="__gtksharp_127_Stetic_Editor_ActionMenuBar" type="Menubar">
+            <node name="menubar2" type="Menubar">
               <node type="Menu" action="FileAction">
                 <node type="Menuitem" action="NewAction" />
                 <node type="Menuitem" action="OpenAction" />
@@ -115,21 +142,23 @@
             <property name="MemberName" />
             <property name="Spacing">6</property>
             <child>
-              <widget class="Gtk.Toolbar" id="ToolBoxToolBar">
+              <widget class="Gtk.Alignment" id="toolbarAlignment">
                 <property name="MemberName" />
-                <property name="ShowArrow">False</property>
-                <node name="ToolBoxToolBar" type="Toolbar" />
+                <child>
+                  <placeholder />
+                </child>
               </widget>
               <packing>
                 <property name="Position">0</property>
-                <property name="AutoSize">True</property>
+                <property name="AutoSize">False</property>
                 <property name="Expand">False</property>
-                <property name="Fill">False</property>
               </packing>
             </child>
             <child>
               <widget class="Gtk.Frame" id="frame1">
                 <property name="MemberName" />
+                <property name="WidthRequest">0</property>
+                <property name="HeightRequest">0</property>
                 <property name="BorderWidth">1</property>
                 <child>
                   <widget class="Gtk.Alignment" id="DrawingBoxAlignment">
@@ -145,7 +174,7 @@
                 <child>
                   <widget class="Gtk.Label" id="GtkLabel3">
                     <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes">&lt;b&gt;GtkFrame&lt;/b&gt;</property>
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;Drawing Area&lt;/b&gt;</property>
                     <property name="UseMarkup">True</property>
                   </widget>
                   <packing>
@@ -161,7 +190,7 @@
           </widget>
           <packing>
             <property name="Position">1</property>
-            <property name="AutoSize">True</property>
+            <property name="AutoSize">False</property>
           </packing>
         </child>
         <child>
@@ -182,6 +211,60 @@
             <property name="Fill">False</property>
           </packing>
         </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Bin" id="UI.ToolBarView" design-size="301 57">
+    <action-group name="Default">
+      <action id="tool2">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes">tool2</property>
+        <property name="ShortLabel" translatable="yes">tool2</property>
+        <property name="StockId">gtk-yes</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+      </action>
+      <action id="tool1">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes">tool1</property>
+        <property name="ShortLabel" translatable="yes">tool1</property>
+        <property name="StockId">gtk-cancel</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+      </action>
+      <action id="tool11">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-yes</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+      </action>
+      <action id="tool21">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-cancel</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+      </action>
+    </action-group>
+    <property name="MemberName" />
+    <property name="Visible">False</property>
+    <child>
+      <widget class="Gtk.Toolbar" id="toolbar4">
+        <property name="MemberName" />
+        <property name="ShowArrow">False</property>
+        <node name="toolbar4" type="Toolbar">
+          <node type="Toolitem" action="tool11" />
+          <node type="Toolitem" action="tool21" />
+        </node>
       </widget>
     </child>
   </widget>

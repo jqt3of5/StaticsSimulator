@@ -15,12 +15,17 @@ public partial class MainWindow
 	private global::Gtk.RadioAction newAction;
 	private global::Gtk.RadioAction refreshAction;
 	private global::Gtk.RadioAction redoAction;
+	private global::Gtk.Action firstAction;
+	private global::Gtk.Action secondAction;
+	private global::Gtk.Action thirdAction;
+	private global::Gtk.Action fourthAction;
+	private global::Gtk.Action fifthAction;
 	private global::Gtk.VBox vbox1;
 	private global::Gtk.MenuBar menubar2;
 	private global::Gtk.VBox vbox2;
-	private global::Gtk.Toolbar toolbar1;
+	private global::Gtk.Alignment toolbarAlignment;
 	private global::Gtk.Frame frame1;
-	private global::Gtk.Alignment GtkAlignment;
+	private global::Gtk.Alignment DrawingBoxAlignment;
 	private global::Gtk.Label GtkLabel3;
 	private global::Gtk.Statusbar statusbar1;
 	
@@ -63,6 +68,17 @@ public partial class MainWindow
 		this.redoAction = new global::Gtk.RadioAction ("redoAction", null, null, "gtk-redo", 0);
 		this.redoAction.Group = this.newAction.Group;
 		w1.Add (this.redoAction, null);
+		this.firstAction = new global::Gtk.Action ("firstAction", null, null, "gtk-goto-bottom");
+		w1.Add (this.firstAction, null);
+		this.secondAction = new global::Gtk.Action ("secondAction", null, null, "gtk-goto-first");
+		w1.Add (this.secondAction, null);
+		this.thirdAction = new global::Gtk.Action ("thirdAction", null, null, "gtk-goto-last");
+		w1.Add (this.thirdAction, null);
+		this.fourthAction = new global::Gtk.Action ("fourthAction", null, null, "gtk-go-back");
+		w1.Add (this.fourthAction, null);
+		this.fifthAction = new global::Gtk.Action ("fifthAction", global::Mono.Unix.Catalog.GetString ("_Down"), null, "gtk-go-down");
+		this.fifthAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Down");
+		w1.Add (this.fifthAction, null);
 		this.UIManager.InsertActionGroup (w1, 0);
 		this.AddAccelGroup (this.UIManager.AccelGroup);
 		this.Name = "MainWindow";
@@ -86,27 +102,26 @@ public partial class MainWindow
 		this.vbox2.Name = "vbox2";
 		this.vbox2.Spacing = 6;
 		// Container child vbox2.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString ("<ui><toolbar name='toolbar1'><toolitem name='newAction' action='newAction'/><toolitem name='refreshAction' action='refreshAction'/><toolitem name='redoAction' action='redoAction'/></toolbar></ui>");
-		this.toolbar1 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget ("/toolbar1")));
-		this.toolbar1.Name = "toolbar1";
-		this.toolbar1.ShowArrow = false;
-		this.vbox2.Add (this.toolbar1);
-		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.toolbar1]));
+		this.toolbarAlignment = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
+		this.toolbarAlignment.Name = "toolbarAlignment";
+		this.vbox2.Add (this.toolbarAlignment);
+		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.toolbarAlignment]));
 		w3.Position = 0;
 		w3.Expand = false;
-		w3.Fill = false;
 		// Container child vbox2.Gtk.Box+BoxChild
 		this.frame1 = new global::Gtk.Frame ();
+		this.frame1.WidthRequest = 0;
+		this.frame1.HeightRequest = 0;
 		this.frame1.Name = "frame1";
 		this.frame1.BorderWidth = ((uint)(1));
 		// Container child frame1.Gtk.Container+ContainerChild
-		this.GtkAlignment = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
-		this.GtkAlignment.Name = "GtkAlignment";
-		this.GtkAlignment.LeftPadding = ((uint)(12));
-		this.frame1.Add (this.GtkAlignment);
+		this.DrawingBoxAlignment = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
+		this.DrawingBoxAlignment.Name = "DrawingBoxAlignment";
+		this.DrawingBoxAlignment.LeftPadding = ((uint)(12));
+		this.frame1.Add (this.DrawingBoxAlignment);
 		this.GtkLabel3 = new global::Gtk.Label ();
 		this.GtkLabel3.Name = "GtkLabel3";
-		this.GtkLabel3.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>GtkFrame</b>");
+		this.GtkLabel3.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Drawing Area</b>");
 		this.GtkLabel3.UseMarkup = true;
 		this.frame1.LabelWidget = this.GtkLabel3;
 		this.vbox2.Add (this.frame1);

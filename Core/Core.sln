@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controllers", "Controllers\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{CFC62657-3094-4BC2-9263-D201A528ACB4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger", "Messenger\Messenger.csproj", "{4C336EB8-2CC3-487C-AAD1-4A5B17688382}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2F2E59E0-8D2F-4E08-A7E3-438F8F827701}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F2E59E0-8D2F-4E08-A7E3-438F8F827701}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F2E59E0-8D2F-4E08-A7E3-438F8F827701}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C336EB8-2CC3-487C-AAD1-4A5B17688382}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C336EB8-2CC3-487C-AAD1-4A5B17688382}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C336EB8-2CC3-487C-AAD1-4A5B17688382}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C336EB8-2CC3-487C-AAD1-4A5B17688382}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CFC62657-3094-4BC2-9263-D201A528ACB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CFC62657-3094-4BC2-9263-D201A528ACB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFC62657-3094-4BC2-9263-D201A528ACB4}.Release|Any CPU.ActiveCfg = Release|Any CPU

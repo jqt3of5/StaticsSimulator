@@ -36,9 +36,31 @@
     <Reference Include="Data">
       <HintPath>..\..\bin\Data.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Cairo" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="Messenger">
+      <HintPath>..\..\Core\Messenger\bin\Debug\Messenger.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Drawing\DrawingWidgetViewModel.cs" />
+    <Compile Include="Interfaces\StaticsSimViewModel.cs" />
+    <Compile Include="ToolBarViewModel.cs" />
+    <Compile Include="Messages\NewToolChosenMessage.cs" />
+    <Compile Include="Messages\RequestRedrawMessage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Drawing\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Messages\" />
+  </ItemGroup>
 </Project>

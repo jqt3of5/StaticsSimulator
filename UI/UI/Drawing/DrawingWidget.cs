@@ -1,24 +1,35 @@
 using System;
 using Gtk;
+using Gdk;
+using ViewModel;
+using Cairo;
 
-namespace UI
+namespace UI	
 {
 	public class DrawingWidget : Gtk.DrawingArea
 	{
-		public DrawingWidget ()
+		
+		public DrawingWidgetViewModel viewModel{get; private set;}
+		
+		public DrawingWidget(DrawingWidgetViewModel vm)
 		{
-			AddEvents(-1); //add events
-			ButtonPressEvent += OnMouseClick;
+			AddEvents (-1);
+			viewModel = vm;
+			//wire up the events to the view model
+			ConfigureEvent += Initialize;
+			ExposeEvent += viewModel.DrawOnExpose;
+			MotionNotifyEvent += viewModel.MouseMoved;
+			ButtonPressEvent += viewModel.ButtonPressed;
+			viewModel.redrawWindow = new System.Action(QueueDraw);
 			
 		}
 		
-		protected void OnMouseClick(object sender, ButtonPressEventArgs args)
+		protected void Initialize (object sender, ConfigureEventArgs args)
 		{
-			if (args.Event.Button != 1)
-				return;
+			viewModel.View = new ImageSurface(Format.Argb32, args.Event.Width, args.Event.Height);
 			
-			Console.WriteLine("test");
 		}
+		
 	}
 }
 
