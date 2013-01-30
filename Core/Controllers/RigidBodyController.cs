@@ -1,6 +1,6 @@
 using System;
 using Data;
-namespace Controllers
+namespace Core.Controllers
 {
 	public class RigidBodyController
 	{

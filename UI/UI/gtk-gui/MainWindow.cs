@@ -66,7 +66,7 @@ public partial class MainWindow
 		this.refreshAction.Group = this.newAction.Group;
 		w1.Add (this.refreshAction, null);
 		this.redoAction = new global::Gtk.RadioAction ("redoAction", null, null, "gtk-redo", 0);
-		this.redoAction.Group = this.newAction.Group;
+		this.redoAction.Group = this.refreshAction.Group;
 		w1.Add (this.redoAction, null);
 		this.firstAction = new global::Gtk.Action ("firstAction", null, null, "gtk-goto-bottom");
 		w1.Add (this.firstAction, null);

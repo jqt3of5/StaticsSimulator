@@ -3,7 +3,10 @@ using Gtk;
 using Gdk;
 using ViewModel;
 using Cairo;
+using Core.UI;
 using System.Collections;
+using Messenger;
+
 namespace UI	
 {
 	public class DrawingWidgetView : Gtk.DrawingArea
@@ -17,9 +20,16 @@ namespace UI
 			viewModel = vm;
 			
 			//View Model will be in charge of redrawing the screen. It knows better
-			viewModel.redrawWindow = new System.Action(QueueDraw);
+			VMMessenger.getMessenger().register<RequestRedrawMessage>(HandleRedrawMessage);
 			
 		}
+		#region Message Handler
+		private void HandleRedrawMessage(RequestRedrawMessage msg)
+		{
+			QueueDraw();
+		}
+		#endregion
+	
 		#region Event Handlers
 		protected override bool OnExposeEvent (EventExpose evnt)
 		{
@@ -41,53 +51,58 @@ namespace UI
 		#endregion
 		
 		#region Draw Functions
-		private void DrawMoment(Context ctx, PointD pt)
+		private void DrawMoment(Context ctx, Tuple<PointD, double> moment)
 		{
 			ctx.Save ();
 		
 			ctx.Color = new Cairo.Color(0,0,0);
-			ctx.Arc(pt.X, pt.Y, 20, 4, 2.28);
+			ctx.Arc(moment.Item1.X, moment.Item1.Y, 20, 4, 2.28);
 			ctx.Stroke();
 			
 			ctx.Restore();
 			
 		}
-		private void DrawForce(Context ctx, DrawingObject force)
+		private void DrawForce(Context ctx, Tuple<PointD, double, double> force)
 		{
 			ctx.Save ();
 			ctx.Color = new Cairo.Color(0,0,0);
-			Tuple<PointD, PointD> f = force.lines[0];
-			ctx.MoveTo(f.Item1);
-			ctx.LineTo(f.Item2);
-			ctx.Rectangle(f.Item2.X-5, f.Item2.Y-5, 10,10);
+			
+			ctx.MoveTo(force.Item1);
+			ctx.LineTo(force.Item3*Math.Cos(force.Item2), force.Item3 * Math.Sin (force.Item2));
+			ctx.Rectangle(force.Item1.X-5, force.Item1.Y-5, 10,10);
 			
 			
 			ctx.Stroke();
 			ctx.Restore();
 		}
-		public void DrawObject(Context ctx, DrawingObject body)
+		public void DrawObject (Context ctx, DrawingObject body)
 		{
 			if (body == null)
 				return;
-			ctx.Save();
-			ctx.Color = new Cairo.Color(0,0,0);
+			ctx.Save ();
+			ctx.Color = new Cairo.Color (0, 0, 0);
 			
 			ctx.LineWidth = 1;
-			foreach(Tuple<PointD, PointD> line in body.lines)
-			{
-				ctx.MoveTo(line.Item1);
-				ctx.LineTo(line.Item2);
+			foreach (Tuple<PointD, PointD> line in body.lines) {
+				ctx.MoveTo (line.Item1);
+				ctx.LineTo (line.Item2);
 			}
 			
-			ctx.Stroke();
+			ctx.Stroke ();
 			
-			foreach(PointD point in body.points)
-			{
-				ctx.Rectangle(point.X-5, point.Y-5, 10,10);
-				ctx.Fill();
+			foreach (PointD point in body.points) {
+				ctx.Rectangle (point.X - 5, point.Y - 5, 10, 10);
+				ctx.Fill ();
 			}
-				
-			ctx.Restore();
+			foreach (Tuple<PointD, double, double> force in body._forces) {
+				DrawForce (ctx, force);
+			}
+			
+			foreach (Tuple<PointD, double> moment in body._moments) {
+				DrawMoment (ctx, moment);
+			}
+			
+			ctx.Restore ();
 		}
 		public  void DrawOnExpose (Gdk.Window window)
 		{
@@ -113,16 +128,6 @@ namespace UI
 					ctx.Restore();
 				}
 				
-				
-				foreach (DrawingObject f in viewModel.Forces)
-				{
-					DrawForce(ctx, f);
-				}
-				
-				foreach (PointD pt in viewModel.Moments)
-				{
-					DrawMoment(ctx, pt);
-				}
 				
 			}
 			

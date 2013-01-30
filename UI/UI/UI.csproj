@@ -61,6 +61,12 @@
       <HintPath>..\..\..\..\..\..\usr\lib\monodevelop\AddIns\MonoDevelop.GtkCore\libstetic.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cairo" />
+    <Reference Include="Data">
+      <HintPath>..\..\bin\Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Messenger">
+      <HintPath>..\..\bin\Debug\Messenger.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

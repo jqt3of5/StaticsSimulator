@@ -1,12 +1,28 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="UI/ToolBarView.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ViewModel/Drawing/DrawingWidgetViewModel.cs">
     <Files>
-      <File FileName="ViewModel/Drawing/DrawingWidgetViewModel.cs" Line="136" Column="23" />
-      <File FileName="ViewModel/Drawing/DrawingWidgetModel.cs" Line="17" Column="3" />
-      <File FileName="UI/ToolBarView.cs" Line="35" Column="58" />
-      <File FileName="UI/Drawing/DrawingWidgetView.cs" Line="22" Column="4" />
+      <File FileName="ViewModel/Drawing/DrawingWidgetViewModel.cs" Line="10" Column="2" />
+      <File FileName="ViewModel/Drawing/DrawingWidgetModel.cs" Line="5" Column="14" />
+      <File FileName="UI/Drawing/DrawingWidgetView.cs" Line="6" Column="14" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="UI" expanded="True">
+            <Node name="Drawing" expanded="True" />
+          </Node>
+          <Node name="ViewModel" expanded="True">
+            <Node name="Drawing" expanded="True">
+              <Node name="DrawingWidgetViewModel.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
