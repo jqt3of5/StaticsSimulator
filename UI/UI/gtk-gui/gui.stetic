@@ -7,7 +7,6 @@
   <import>
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../../../../../../../usr/lib/monodevelop/AddIns/MonoDevelop.GtkCore/libstetic.dll" />
-    <widget-library name="../../../bin/Debug/ViewModel.dll" />
     <widget-library name="../../../bin/Debug/UI.exe" internal="true" />
   </import>
   <widget class="Gtk.Window" id="MainWindow" design-size="480 360">
@@ -254,6 +253,24 @@
         <property name="Value">0</property>
         <property name="Group">group1</property>
       </action>
+      <action id="tool3">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-refresh</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+      </action>
+      <action id="tool4">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-redo</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Visible">False</property>
@@ -264,6 +281,8 @@
         <node name="toolbar4" type="Toolbar">
           <node type="Toolitem" action="tool11" />
           <node type="Toolitem" action="tool21" />
+          <node type="Toolitem" action="tool3" />
+          <node type="Toolitem" action="tool4" />
         </node>
       </widget>
     </child>

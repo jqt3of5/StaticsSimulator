@@ -12,7 +12,7 @@ namespace ViewModel
 		//moment - a moment point
 		//joint - a joint bettween two bodies
 		//anchor - an anchor (rigid or hinged) that anchors a single body
-		public enum Tools{CONNECTED, UNCONNECTED, FORCE, MOMENT, JOINT, ANCHOR, POINT, NONE};
+		public enum Tools{CONNECTED, UNCONNECTED, FORCE, MOMENT, JOINT, ANCHOR, POINT, SELECTION, NONE};
 		
 		private Tools _selectedTool;
 		public Tools selectedTool 
@@ -24,8 +24,7 @@ namespace ViewModel
 				VMMessenger.getMessenger().sendMessage<NewToolChosenMessage>(new NewToolChosenMessage(value));
 			
 			}
-		} // this property needs to send a message to DrawingWidgetviewmodel! 
-		  //I want to use mvvm light. Seems the way to go. 
+		} 
 		
 		public ToolBarViewModel ()
 		{

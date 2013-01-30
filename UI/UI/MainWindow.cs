@@ -4,7 +4,7 @@ using UI;
 using ViewModel;
 public partial class MainWindow: Gtk.Window
 {	
-	public DrawingWidget drawingView{get; private set;}
+	public DrawingWidgetView drawingView{get; private set;}
 	public DrawingWidgetViewModel drawingViewModel{get; private set;}
 	
 	public ToolBarView toolBarView{get; private set;}
@@ -16,7 +16,7 @@ public partial class MainWindow: Gtk.Window
 		Build ();
 		//add the special drawing window here
 		drawingViewModel = new DrawingWidgetViewModel();
-		drawingView = new DrawingWidget(drawingViewModel);
+		drawingView = new DrawingWidgetView(drawingViewModel);
 		
 		toolBarViewModel = new ToolBarViewModel();
 		toolBarView = new ToolBarView(toolBarViewModel);

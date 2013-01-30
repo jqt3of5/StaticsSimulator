@@ -56,6 +56,8 @@
     <Compile Include="ToolBarViewModel.cs" />
     <Compile Include="Messages\NewToolChosenMessage.cs" />
     <Compile Include="Messages\RequestRedrawMessage.cs" />
+    <Compile Include="Drawing\DrawingWidgetModel.cs" />
+    <Compile Include="Drawing\DrawingObject.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

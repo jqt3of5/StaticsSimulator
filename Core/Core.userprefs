@@ -1,10 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Data/Beam.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Data/AssemblyInfo.cs">
     <Files>
-      <File FileName="Controllers/PivotController.cs" Line="13" Column="4" />
-      <File FileName="Data/Beam.cs" Line="4" Column="15" />
-      <File FileName="Data/RigidBody.cs" Line="3" Column="15" />
+      <File FileName="Data/AssemblyInfo.cs" Line="10" Column="32" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

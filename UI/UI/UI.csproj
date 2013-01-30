@@ -73,9 +73,9 @@
     <Compile Include="gtk-gui\MainWindow.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Drawing\DrawingWidget.cs" />
     <Compile Include="ToolBarView.cs" />
     <Compile Include="gtk-gui\UI.ToolBarView.cs" />
+    <Compile Include="Drawing\DrawingWidgetView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

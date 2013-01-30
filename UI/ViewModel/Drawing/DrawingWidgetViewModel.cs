@@ -3,38 +3,52 @@ using Cairo;
 using Gtk;
 using Gdk;
 using Messenger;
+using System.Collections;
+using System.Collections.Generic;
 namespace ViewModel
 {
 	public class DrawingWidgetViewModel
 	{ 
 		#region private members
-		private Surface _view;
-		private bool isDrawingObject;
-		private PointD lastPoint;
+		private double _mouseX;
+		private double _mouseY;
+		private double _lastX;
+		private double _lastY;
+		private DrawingWidgetModel _model;
 		#endregion
 		
 		#region Properties
-		public ToolBarViewModel.Tools selectedTool{get; set;}
-		public Surface View 
+		public PointD MousePos { get{ return new PointD(_mouseX, _mouseY);} }
+		public PointD LastPos { get{ return new PointD(_lastX, _lastY); } }
+		
+		public bool IsDrawingObject{get; private set;}
+		
+		public DrawingObject tempObject{get; private set;}
+		
+		
+		public List<DrawingObject> Forces
 		{
-			get{ return _view;} 
-			set 
-			{
-				_view = value;
-				using (Context ctx = new Context(value)){
-					ctx.SetSourceRGB(1,1,1);
-					ctx.Paint ();
-				}
-			}
-		}	
+			get { return _model.Forces; }
+		}
+		public List<PointD> Moments
+		{
+			get { return _model.Moments; }
+		}
+		public List<DrawingObject> ObjectsToDraw
+		{
+			get { return _model.Objects;}
+		}
+		public ToolBarViewModel.Tools selectedTool{get; private set;}
 		public System.Action redrawWindow{get; set;}
 		#endregion
 		
 		#region Constructors
 		public DrawingWidgetViewModel ()
 		{
-			isDrawingObject = false;
+			IsDrawingObject = false;
 			selectedTool = ToolBarViewModel.Tools.NONE;
+			_model = new DrawingWidgetModel();
+		
 			VMMessenger.getMessenger().register<NewToolChosenMessage>(RequestToolChange);			
 			VMMessenger.getMessenger().register<RequestRedrawMessage>(RequestRedraw);		                                              
 		}
@@ -53,75 +67,106 @@ namespace ViewModel
 		}
 		#endregion
 		
-		#region Event Handlers
-		public  void DrawOnExpose (object o, ExposeEventArgs args)
+		#region Private Methods
+		private void BeginDrawingBody()
 		{
-			using (Context ctx = Gdk.CairoHelper.Create(args.Event.Window)){
-				ctx.SetSourceSurface(View, 0,0);
-				ctx.Paint();
-			}
-			
+			IsDrawingObject = true;
+			tempObject = new DrawingObject();
 		}
-		
-		public  void MouseMoved (object o, MotionNotifyEventArgs args)
+		private void EndDrawingUnconnected()
 		{
-			if (isDrawingObject)
-				using (Context ctx = new Context(View)){
-					ctx.SetSourceRGB(1,1,1);
-					ctx.Paint();
-					
-					ctx.SetSourceRGB(0,0,0);
-					ctx.Rectangle(lastPoint.X-5, lastPoint.Y-5, 10,10);
-					ctx.Fill ();
-					ctx.LineWidth = 1;
-					
-					ctx.MoveTo(lastPoint);
-					ctx.LineTo(new PointD(args.Event.X, args.Event.Y));
-					ctx.Stroke();
-					
-				}
-		    Console.WriteLine ("moved to: " + args.Event.X + " " + args.Event.Y);
-			redrawWindow();
+			IsDrawingObject = false;
+			_model.commitTemporaryObject(tempObject);
 		}
+		private void EndDrawingConnected()
+		{
+			IsDrawingObject = false;
+			_model.commitTemporaryObject(tempObject);
+		}
+		private void EndDrawingForce()
+		{
+			IsDrawingObject = false;
+			_model.commitTemporaryAsForce(tempObject);
+		}
+		#endregion
 		
-		public  void ButtonPressed (object o, ButtonPressEventArgs args)
+		#region Event Handlers (Main View interface)
+		
+		public  void MouseMoved (double x, double y)
 		{
 			
-			switch(args.Event.Button)
+			_mouseX = x;
+			_mouseY = y;
+	
+			//probably need something to implement a "snap to" feature of moments and forces
+			
+			if (redrawWindow !=null)
+				redrawWindow();
+		}
+		
+		public  void ButtonPressed (uint button)
+		{
+			switch(button)
 			{
 			case 1:
+				
 				switch(selectedTool)
 				{
-				case ToolBarViewModel.Tools.POINT:
-					isDrawingObject = false;
-					using (Context ctx = new Context(View)){
-						ctx.Rectangle (args.Event.X-5,args.Event.Y-5,10,10);
-						ctx.Fill();					
-					}
+				case ToolBarViewModel.Tools.SELECTION:
+					
+					break;
+				case ToolBarViewModel.Tools.FORCE:
+					if (!IsDrawingObject)
+						BeginDrawingBody();
+					tempObject.AddPoint(MousePos);
+					if (tempObject.points.Count == 2)
+						EndDrawingForce();
+					break;
+					
+				case ToolBarViewModel.Tools.MOMENT:
+					_model.Moments.Add(MousePos);
 				break;
+					
+				case ToolBarViewModel.Tools.CONNECTED:
+					if (!IsDrawingObject)
+						BeginDrawingBody();
+					tempObject.AddPoint(MousePos);
+					break;
+					
 				case ToolBarViewModel.Tools.UNCONNECTED:
-					lastPoint = new PointD(args.Event.X, args.Event.Y);
-					using (Context ctx = new Context(View)){
-						ctx.Rectangle (args.Event.X-5,args.Event.Y-5,10,10);
-						ctx.Fill();					
-					}
-					isDrawingObject = true;
-				break;
+					if (!IsDrawingObject)
+						BeginDrawingBody();
+					tempObject.AddPoint(MousePos);
+					break;
 				
 				default:
 				break;
 				}
-
+				_lastX = _mouseX;
+				_lastY = _mouseY;
 			break;
 				
 			case 3:
-				if (isDrawingObject)
-				using (Context ctx = new Context(View)){
-						ctx.Rectangle (args.Event.X-5,args.Event.Y-5,10,10);
-						ctx.Fill();					
+				if (IsDrawingObject){
+					
+					tempObject.AddPoint(MousePos);
+					switch(selectedTool)
+					{
+					case ToolBarViewModel.Tools.CONNECTED:
+						tempObject.Connect();
+						EndDrawingConnected();
+						break;
+						
+					case ToolBarViewModel.Tools.UNCONNECTED:
+						EndDrawingUnconnected();
+						break;
+					case ToolBarViewModel.Tools.FORCE:
+						EndDrawingForce();
+						break;
 					}
-				isDrawingObject = false;
-				break;
+						
+				}
+			break;
 			}
 			if (redrawWindow != null)
 				redrawWindow();

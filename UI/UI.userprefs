@@ -1,13 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="UI/MainWindow.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="UI/ToolBarView.cs">
     <Files>
-      <File FileName="UI/Main.cs" Line="14" Column="1" />
-      <File FileName="UI/MainWindow.cs" Line="24" Column="17" />
-      <File FileName="ViewModel/Drawing/DrawingWidgetViewModel.cs" Line="15" Column="17" />
-      <File FileName="UI/Drawing/DrawingWidget.cs" Line="26" Column="3" />
-      <File FileName="UI/ToolBarView.cs" Line="8" Column="3" />
-      <File FileName="ViewModel/ToolBarViewModel.cs" Line="26" Column="5" />
+      <File FileName="ViewModel/Drawing/DrawingWidgetViewModel.cs" Line="136" Column="23" />
+      <File FileName="ViewModel/Drawing/DrawingWidgetModel.cs" Line="17" Column="3" />
+      <File FileName="UI/ToolBarView.cs" Line="35" Column="58" />
+      <File FileName="UI/Drawing/DrawingWidgetView.cs" Line="22" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
