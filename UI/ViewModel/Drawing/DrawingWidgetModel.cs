@@ -9,6 +9,7 @@ namespace ViewModel
 	{
 
 		public List<DrawingObject> Objects{get; private set;}
+
 		public DrawingWidgetModel ()
 		{
 			Objects = new List<DrawingObject>();
