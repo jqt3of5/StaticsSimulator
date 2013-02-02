@@ -85,10 +85,24 @@ namespace ViewModel
 			
 			_mouseX = x;
 			_mouseY = y;
-	
+			
 			//probably need something to implement a "snap to" feature of moments and forces
 			
-			VMMessenger.getMessenger().sendMessage<RequestRedrawMessage>(new RequestRedrawMessage());
+			switch (selectedTool) 
+			{
+			case ToolBarViewModel.Tools.SELECTION:
+				//just get the active object
+				break;
+			case ToolBarViewModel.Tools.FORCE:
+			case ToolBarViewModel.Tools.MOMENT:
+			case ToolBarViewModel.Tools.ANCHOR:
+				//get active object and active point
+				//snap to active point
+				break;
+			}
+			
+			
+			VMMessenger.getMessenger ().sendMessage<RequestRedrawMessage> (new RequestRedrawMessage ());
 		}
 		
 		public  void ButtonPressed (uint button)
