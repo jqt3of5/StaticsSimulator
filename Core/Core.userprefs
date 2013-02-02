@@ -1,8 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Data/AssemblyInfo.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Data\AssemblyInfo.cs">
     <Files>
-      <File FileName="Data/AssemblyInfo.cs" Line="10" Column="32" />
+      <File FileName="Data\AssemblyInfo.cs" Line="10" Column="32" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

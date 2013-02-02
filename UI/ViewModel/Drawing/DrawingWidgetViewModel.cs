@@ -22,7 +22,7 @@ namespace ViewModel
 		
 		public PointD MousePos { get{ return new PointD(_mouseX, _mouseY);} }
 		public PointD LastPos { get{ return new PointD(_lastX, _lastY); } }
-		
+
 		public bool IsDrawingObject{get; private set;}
 		
 		public DrawingObject tempObject{ get; private set; }
@@ -117,6 +117,7 @@ namespace ViewModel
 				case ToolBarViewModel.Tools.FORCE:
 					//popup dialog that asks for mag/dir
 					//ActiveObject.AddForce (new Tuple<PointD,double, double> ());
+					var dialog = new DoubleInput(2);
 					break;
 					
 				case ToolBarViewModel.Tools.MOMENT:

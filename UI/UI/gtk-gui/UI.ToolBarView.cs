@@ -29,21 +29,23 @@ namespace UI
 			this.tool1.ShortLabel = global::Mono.Unix.Catalog.GetString ("tool1");
 			w2.Add (this.tool1, null);
 			this.tool11 = new global::Gtk.RadioAction ("tool11", null, null, "gtk-yes", 0);
-			this.tool11.Group = this.tool1.Group;
+			this.tool11.Group = this.tool2.Group;
 			w2.Add (this.tool11, null);
 			this.tool21 = new global::Gtk.RadioAction ("tool21", null, null, "gtk-cancel", 0);
-			this.tool21.Group = this.tool1.Group;
+			this.tool21.Group = this.tool2.Group;
 			w2.Add (this.tool21, null);
 			this.tool3 = new global::Gtk.RadioAction ("tool3", null, null, "gtk-refresh", 0);
-			this.tool3.Group = this.tool1.Group;
+			this.tool3.Group = this.tool2.Group;
 			w2.Add (this.tool3, null);
 			this.tool4 = new global::Gtk.RadioAction ("tool4", null, null, "gtk-redo", 0);
-			this.tool4.Group = this.tool1.Group;
+			this.tool4.Group = this.tool2.Group;
 			w2.Add (this.tool4, null);
 			this.UIManager.InsertActionGroup (w2, 0);
 			this.Name = "UI.ToolBarView";
 			// Container child UI.ToolBarView.Gtk.Container+ContainerChild
-			this.UIManager.AddUiFromString ("<ui><toolbar name='toolbar4'><toolitem name='tool11' action='tool11'/><toolitem name='tool21' action='tool21'/><toolitem name='tool3' action='tool3'/><toolitem name='tool4' action='tool4'/></toolbar></ui>");
+			this.UIManager.AddUiFromString ("<ui><toolbar name=\'toolbar4\'><toolitem name=\'tool11\' action=\'tool11\'/><toolitem n" +
+				"ame=\'tool21\' action=\'tool21\'/><toolitem name=\'tool3\' action=\'tool3\'/><toolitem n" +
+				"ame=\'tool4\' action=\'tool4\'/></toolbar></ui>");
 			this.toolbar4 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget ("/toolbar4")));
 			this.toolbar4.Name = "toolbar4";
 			this.toolbar4.ShowArrow = false;

@@ -11,22 +11,22 @@
     <AssemblyName>Controllers</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>..\..\bin</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>..\..\bin</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -37,14 +37,14 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <None Include="PivotController.cs" />
+    <None Include="JointController.cs" />
+    <None Include="BeamController.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Data\Data.csproj">
       <Project>{CFC62657-3094-4BC2-9263-D201A528ACB4}</Project>
       <Name>Data</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="PivotController.cs" />
-    <None Include="JointController.cs" />
-    <None Include="BeamController.cs" />
   </ItemGroup>
 </Project>
