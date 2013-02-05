@@ -4,6 +4,7 @@ using Gtk;
 using Gdk;
 using Messenger;
 using Core.UI;
+using Core.VM;
 using System.Collections;
 using System.Collections.Generic;
 namespace ViewModel
@@ -93,6 +94,9 @@ namespace ViewModel
 		
 		public  void ButtonPressed (uint button)
 		{
+			DoubleInputView dialogView;
+		//	DoubleInputViewModel dialogViewModel;
+
 			switch (button) {
 			case 1:
 				
@@ -102,13 +106,18 @@ namespace ViewModel
 					break;
 				case ToolBarViewModel.Tools.FORCE:
 					//popup dialog that asks for mag/dir
-					//ActiveObject.AddForce (new Tuple<PointD,double, double> ());
-					var dialog = new DoubleInput(2);
+					dialogView = new DoubleInputView(2);
+					dialogView.ShowAll();
+					if (ActiveObject != null && dialogView._inputs != null)
+						ActiveObject.AddForce (new Tuple<PointD,double, double> (MousePos,dialogView._inputs[0], dialogView._inputs[1]));
 					break;
 					
 				case ToolBarViewModel.Tools.MOMENT:
 					//popup dialog that asks for mag
-					//ActiveObject.AddMoment(new Tuple<PointD, double>());
+					dialogView = new DoubleInputView(1);
+					dialogView.ShowAll();
+					if (ActiveObject != null && dialogView._inputs != null)
+						ActiveObject.AddMoment(new Tuple<PointD, double>(MousePos,dialogView._inputs[0]));
 					break;
 					
 				case ToolBarViewModel.Tools.CONNECTED:

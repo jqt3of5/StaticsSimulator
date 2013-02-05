@@ -39,8 +39,6 @@
     <Compile Include="Pivot.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="RigidBody.cs" />
-    <Compile Include="StaticsObject.cs" />
-    <Compile Include="DialogBoxes\DoubleInput.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
