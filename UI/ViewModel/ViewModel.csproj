@@ -9,6 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>ViewModel</RootNamespace>
     <AssemblyName>ViewModel</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -49,6 +50,7 @@
     <Compile Include="Drawing\DrawingWidgetModel.cs" />
     <Compile Include="Messages\NewToolChosenMessage.cs" />
     <Compile Include="Messages\RequestRedrawMessage.cs" />
+    <Compile Include="Messages\UpdateStatusMessage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

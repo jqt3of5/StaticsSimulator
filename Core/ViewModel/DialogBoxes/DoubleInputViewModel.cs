@@ -4,7 +4,7 @@ namespace Core.VM
 {
 	public class DoubleInputViewModel
 	{
-		public int Count { get; set; }
+		public int Count {get; set; }
 		public Double [] _inputs;
 
 		public DoubleInputViewModel (int numberOfInputs)

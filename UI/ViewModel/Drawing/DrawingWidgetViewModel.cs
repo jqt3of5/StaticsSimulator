@@ -5,6 +5,7 @@ using Gdk;
 using Messenger;
 using Core.UI;
 using Core.VM;
+using Core;
 using System.Collections;
 using System.Collections.Generic;
 namespace ViewModel
@@ -17,6 +18,7 @@ namespace ViewModel
 		private double _lastX;
 		private double _lastY;
 		private DrawingWidgetModel _model;
+
 		#endregion
 		
 		#region Properties
@@ -25,17 +27,17 @@ namespace ViewModel
 		public PointD LastPos { get{ return new PointD(_lastX, _lastY); } }
 
 		public bool IsDrawingObject{get; private set;}
-		
-		public DrawingObject tempObject{ get; private set; }
-		
+
 		public List<DrawingObject> ObjectsToDraw {
 			get { return _model.Objects;}
 		}
-		public DrawingObject ActiveObject { get; private set; }
-		public PointD ActivePoint { get; private set; }
+
+	
+		public DrawingObject ActiveObject { get { return _model.ActiveObject; } }
+		public PointD ActivePoint { get { return _model.ActivePoint; } }
 		
 		public ToolBarViewModel.Tools selectedTool{get; private set;}
-
+		public DrawingObject TemporaryObject { get{ return _model.TemporaryObject;} }
 		#endregion
 		
 		#region Constructors
@@ -44,7 +46,6 @@ namespace ViewModel
 			IsDrawingObject = false;
 			selectedTool = ToolBarViewModel.Tools.NONE;
 			_model = new DrawingWidgetModel();
-		
 			VMMessenger.getMessenger().register<NewToolChosenMessage>(RequestToolChange);			
 		}
 		#endregion
@@ -62,19 +63,21 @@ namespace ViewModel
 		private void BeginDrawingBody()
 		{
 			IsDrawingObject = true;
-			tempObject = new DrawingObject();
+
+			VMMessenger.getMessenger().sendMessage(new UpdateStatusMessage("Drawing Body. Right click to finish"));
 		}
 		private void EndDrawingUnconnected()
 		{
 			IsDrawingObject = false;
-			_model.commitTemporaryObject(tempObject);
+			_model.commitTemporaryObject();
+			VMMessenger.getMessenger().sendMessage(new UpdateStatusMessage("Finished drawing body"));
 		}
 		private void EndDrawingConnected ()
 		{
 			IsDrawingObject = false;
-			tempObject.Connect ();
-			_model.commitTemporaryObject (tempObject);
-			
+			_model.TemporaryObject.Connect ();
+			_model.commitTemporaryObject ();
+			VMMessenger.getMessenger().sendMessage(new UpdateStatusMessage("Finished drawing body"));
 		}
 		
 		#endregion
@@ -88,7 +91,10 @@ namespace ViewModel
 			_mouseY = y;
 	
 			//probably need something to implement a "snap to" feature of moments and forces
-			
+			var pointsList = _model._spatialTree.GetPointsInRange(MousePos, 10);
+			if (pointsList.Count > 0)
+				Console.WriteLine("X: " + pointsList[0].X + " Y: " + pointsList[0].Y);
+
 			VMMessenger.getMessenger().sendMessage<RequestRedrawMessage>(new RequestRedrawMessage());
 		}
 		
@@ -109,7 +115,7 @@ namespace ViewModel
 					dialogView = new DoubleInputView(2);
 					dialogView.ShowAll();
 					if (ActiveObject != null && dialogView._inputs != null)
-						ActiveObject.AddForce (new Tuple<PointD,double, double> (MousePos,dialogView._inputs[0], dialogView._inputs[1]));
+						ActiveObject.AddForce (new Core.Tuple<PointD,double, double> (MousePos,dialogView._inputs[0], dialogView._inputs[1]));
 					break;
 					
 				case ToolBarViewModel.Tools.MOMENT:
@@ -117,19 +123,19 @@ namespace ViewModel
 					dialogView = new DoubleInputView(1);
 					dialogView.ShowAll();
 					if (ActiveObject != null && dialogView._inputs != null)
-						ActiveObject.AddMoment(new Tuple<PointD, double>(MousePos,dialogView._inputs[0]));
+						ActiveObject.AddMoment(new Core.Tuple<PointD, double>(MousePos,dialogView._inputs[0]));
 					break;
 					
 				case ToolBarViewModel.Tools.CONNECTED:
 					if (!IsDrawingObject)
 						BeginDrawingBody ();
-					tempObject.AddPoint (MousePos);
-					break;
+					_model.TemporaryObject.AddPoint (MousePos);
+                    break;
 					
 				case ToolBarViewModel.Tools.UNCONNECTED:
 					if (!IsDrawingObject)
 						BeginDrawingBody ();
-					tempObject.AddPoint (MousePos);
+					_model.TemporaryObject.AddPoint (MousePos);
 					break;
 				
 				default:
@@ -142,7 +148,7 @@ namespace ViewModel
 			case 3:
 				if (IsDrawingObject) {
 					
-					tempObject.AddPoint (MousePos);
+					_model.TemporaryObject.AddPoint (MousePos);
 					switch (selectedTool) {
 					case ToolBarViewModel.Tools.CONNECTED:
 						EndDrawingConnected ();

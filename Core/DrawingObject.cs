@@ -1,7 +1,7 @@
 using System;
 using Cairo;
 using System.Collections.Generic;
-namespace Core.UI
+namespace Core
 {
 	public class DrawingObject
 	{
@@ -9,15 +9,22 @@ namespace Core.UI
 		public List<Tuple<PointD, double, double>> _forces;
 		public List<PointD> points;
 		public List<Tuple<PointD,PointD>> lines;
+
+
+
+
 		private PointD firstPoint;
 		private PointD lastPoint;
-		
+
+
+
 		public DrawingObject ()
 		{
 			points = new List<PointD>();
 			lines = new List<Tuple<PointD, PointD>>();
 			_moments = new List<Tuple<PointD, double>>();
 			_forces = new List<Tuple<PointD, double, double>>();
+
 		}
 		public void AddMoment(Tuple<PointD, double> moment)
 		{
@@ -38,6 +45,8 @@ namespace Core.UI
 				lines.Add(new Tuple<PointD, PointD>(lastPoint, point));
 			
 			lastPoint = point;
+
+
 			
 		}
 		public void Connect()

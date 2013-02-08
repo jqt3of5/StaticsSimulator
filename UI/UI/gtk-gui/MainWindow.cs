@@ -27,7 +27,7 @@ public partial class MainWindow
 	private global::Gtk.Frame frame1;
 	private global::Gtk.Alignment DrawingBoxAlignment;
 	private global::Gtk.Label GtkLabel3;
-	private global::Gtk.Statusbar statusbar1;
+	private global::Gtk.Statusbar _statusBar;
 	
 	protected virtual void Build ()
 	{
@@ -66,7 +66,7 @@ public partial class MainWindow
 		this.refreshAction.Group = this.newAction.Group;
 		w1.Add (this.refreshAction, null);
 		this.redoAction = new global::Gtk.RadioAction ("redoAction", null, null, "gtk-redo", 0);
-		this.redoAction.Group = this.refreshAction.Group;
+		this.redoAction.Group = this.newAction.Group;
 		w1.Add (this.redoAction, null);
 		this.firstAction = new global::Gtk.Action ("firstAction", null, null, "gtk-goto-bottom");
 		w1.Add (this.firstAction, null);
@@ -131,11 +131,11 @@ public partial class MainWindow
 		global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.vbox2]));
 		w6.Position = 1;
 		// Container child vbox1.Gtk.Box+BoxChild
-		this.statusbar1 = new global::Gtk.Statusbar ();
-		this.statusbar1.Name = "statusbar1";
-		this.statusbar1.Spacing = 6;
-		this.vbox1.Add (this.statusbar1);
-		global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.statusbar1]));
+		this._statusBar = new global::Gtk.Statusbar ();
+		this._statusBar.Name = "_statusBar";
+		this._statusBar.Spacing = 6;
+		this.vbox1.Add (this._statusBar);
+		global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this._statusBar]));
 		w7.Position = 2;
 		w7.Expand = false;
 		w7.Fill = false;
