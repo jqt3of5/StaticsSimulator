@@ -4,6 +4,8 @@ using Gtk;
 using Gdk;
 using Messenger;
 using Core.UI;
+using Core.VM;
+using Core;
 using System.Collections;
 using System.Collections.Generic;
 namespace ViewModel
@@ -16,6 +18,7 @@ namespace ViewModel
 		private double _lastX;
 		private double _lastY;
 		private DrawingWidgetModel _model;
+
 		#endregion
 		
 		#region Properties
@@ -24,17 +27,17 @@ namespace ViewModel
 		public PointD LastPos { get{ return new PointD(_lastX, _lastY); } }
 
 		public bool IsDrawingObject{get; private set;}
-		
-		public DrawingObject tempObject{ get; private set; }
-		
+
 		public List<DrawingObject> ObjectsToDraw {
 			get { return _model.Objects;}
 		}
-		public DrawingObject ActiveObject { get; private set; }
-		public PointD ActivePoint { get; private set; }
+
+	
+		public DrawingObject ActiveObject { get { return _model.ActiveObject; } }
+		public PointD ActivePoint { get { return _model.ActivePoint; } private set { _model.ActivePoint = value; } }
 		
 		public ToolBarViewModel.Tools selectedTool{get; private set;}
-
+		public DrawingObject TemporaryObject { get{ return _model.TemporaryObject;} }
 		#endregion
 		
 		#region Constructors
@@ -43,7 +46,6 @@ namespace ViewModel
 			IsDrawingObject = false;
 			selectedTool = ToolBarViewModel.Tools.NONE;
 			_model = new DrawingWidgetModel();
-		
 			VMMessenger.getMessenger().register<NewToolChosenMessage>(RequestToolChange);			
 		}
 		#endregion
@@ -52,7 +54,7 @@ namespace ViewModel
 		
 		private void RequestToolChange(NewToolChosenMessage tool)
 		{
-			Console.WriteLine("changed tool");
+			VMMessenger.getMessenger().sendMessage(new UpdateStatusMessage("Tool changed to " + tool.tool.ToString()));
 			selectedTool = tool.tool;
 		}
 		#endregion
@@ -61,19 +63,21 @@ namespace ViewModel
 		private void BeginDrawingBody()
 		{
 			IsDrawingObject = true;
-			tempObject = new DrawingObject();
+
+			VMMessenger.getMessenger().sendMessage(new UpdateStatusMessage("Drawing Body. Right click to finish"));
 		}
 		private void EndDrawingUnconnected()
 		{
 			IsDrawingObject = false;
-			_model.commitTemporaryObject(tempObject);
+			_model.commitTemporaryObject();
+			VMMessenger.getMessenger().sendMessage(new UpdateStatusMessage("Finished drawing body"));
 		}
 		private void EndDrawingConnected ()
 		{
 			IsDrawingObject = false;
-			tempObject.Connect ();
-			_model.commitTemporaryObject (tempObject);
-			
+			_model.TemporaryObject.Connect ();
+			_model.commitTemporaryObject ();
+			VMMessenger.getMessenger().sendMessage(new UpdateStatusMessage("Finished drawing body"));
 		}
 		
 		#endregion
@@ -87,26 +91,21 @@ namespace ViewModel
 			_mouseY = y;
 			
 			//probably need something to implement a "snap to" feature of moments and forces
-			
-			switch (selectedTool) 
-			{
-			case ToolBarViewModel.Tools.SELECTION:
-				//just get the active object
-				break;
-			case ToolBarViewModel.Tools.FORCE:
-			case ToolBarViewModel.Tools.MOMENT:
-			case ToolBarViewModel.Tools.ANCHOR:
-				//get active object and active point
-				//snap to active point
-				break;
-			}
-			
-			
-			VMMessenger.getMessenger ().sendMessage<RequestRedrawMessage> (new RequestRedrawMessage ());
+			//this should get refactored. It works, but thing to think about
+			_model.ActivePoint = _model._spatialTree.GetClosestPoint(MousePos);
+			if (_model.PointToParent.ContainsKey(_model.ActivePoint))
+				_model.ActiveObject = _model.PointToParent[_model.ActivePoint];
+
+
+			VMMessenger.getMessenger().sendMessage<RequestRedrawMessage>(new RequestRedrawMessage());
+
 		}
 		
 		public  void ButtonPressed (uint button)
 		{
+			DoubleInputView dialogView;
+			DoubleInputModel dialogModel;
+
 			switch (button) {
 			case 1:
 				
@@ -116,25 +115,42 @@ namespace ViewModel
 					break;
 				case ToolBarViewModel.Tools.FORCE:
 					//popup dialog that asks for mag/dir
-					//ActiveObject.AddForce (new Tuple<PointD,double, double> ());
-					var dialog = new DoubleInput(2);
+					dialogModel = new DoubleInputModel(2); 
+					dialogView = new DoubleInputView(dialogModel);
+					dialogView.ShowAll();
+					dialogView.Run();
+
+					if (ActiveObject != null && dialogModel._inputs != null){
+						ActiveObject.AddForce (new Core.Tuple<PointD,double, double> (ActivePoint,dialogModel._inputs[0], dialogModel._inputs[1]));
+						Console.WriteLine("B: " + dialogModel._inputs[0] + " C: " + dialogModel._inputs[0]);
+					}
+
+
+
 					break;
 					
 				case ToolBarViewModel.Tools.MOMENT:
 					//popup dialog that asks for mag
-					//ActiveObject.AddMoment(new Tuple<PointD, double>());
+					dialogModel = new DoubleInputModel(1); 
+					dialogView = new DoubleInputView(dialogModel);
+					dialogView.ShowAll();
+					dialogView.Run();
+
+					if (ActiveObject != null && dialogModel._inputs != null)
+						ActiveObject.AddMoment (new Core.Tuple<PointD,double> (ActivePoint,dialogModel._inputs[0]));
+					
 					break;
 					
 				case ToolBarViewModel.Tools.CONNECTED:
 					if (!IsDrawingObject)
 						BeginDrawingBody ();
-					tempObject.AddPoint (MousePos);
-					break;
+					_model.TemporaryObject.AddPoint (MousePos);
+                    break;
 					
 				case ToolBarViewModel.Tools.UNCONNECTED:
 					if (!IsDrawingObject)
 						BeginDrawingBody ();
-					tempObject.AddPoint (MousePos);
+					_model.TemporaryObject.AddPoint (MousePos);
 					break;
 				
 				default:
@@ -147,7 +163,7 @@ namespace ViewModel
 			case 3:
 				if (IsDrawingObject) {
 					
-					tempObject.AddPoint (MousePos);
+					_model.TemporaryObject.AddPoint (MousePos);
 					switch (selectedTool) {
 					case ToolBarViewModel.Tools.CONNECTED:
 						EndDrawingConnected ();

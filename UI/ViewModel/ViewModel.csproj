@@ -9,12 +9,13 @@
     <OutputType>Library</OutputType>
     <RootNamespace>ViewModel</RootNamespace>
     <AssemblyName>ViewModel</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>False</Optimize>
-    <OutputPath>..\..\bin\Debug</OutputPath>
+    <OutputPath>..\..\bin</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -23,47 +24,55 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>False</Optimize>
-    <OutputPath>..\..\bin\Release</OutputPath>
+    <OutputPath>..\..\bin</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="Controllers">
-      <HintPath>..\..\bin\Controllers.dll</HintPath>
-    </Reference>
-    <Reference Include="Data">
-      <HintPath>..\..\bin\Data.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Cairo" />
     <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="Messenger">
-      <HintPath>..\..\Core\Messenger\bin\Debug\Messenger.dll</HintPath>
-    </Reference>
     <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
       <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Drawing\DrawingWidgetViewModel.cs" />
-    <Compile Include="Interfaces\StaticsSimViewModel.cs" />
     <Compile Include="ToolBarViewModel.cs" />
     <Compile Include="Drawing\DrawingWidgetModel.cs" />
     <Compile Include="Messages\NewToolChosenMessage.cs" />
     <Compile Include="Messages\RequestRedrawMessage.cs" />
+    <Compile Include="Messages\UpdateStatusMessage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Drawing\" />
-    <Folder Include="Interfaces\" />
     <Folder Include="Messages\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Core.csproj">
       <Project>{38E2A04E-7860-4D4D-BDFB-E7A76F59DA01}</Project>
       <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Messenger\Messenger.csproj">
+      <Project>{4C336EB8-2CC3-487C-AAD1-4A5B17688382}</Project>
+      <Name>Messenger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Data\Data.csproj">
+      <Project>{CFC62657-3094-4BC2-9263-D201A528ACB4}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Controllers\Controllers.csproj">
+      <Project>{2F2E59E0-8D2F-4E08-A7E3-438F8F827701}</Project>
+      <Name>Controllers</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

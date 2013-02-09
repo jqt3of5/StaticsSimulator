@@ -2,6 +2,7 @@ using System;
 using Gtk;
 using UI;
 using ViewModel;
+using Messenger;
 public partial class MainWindow: Gtk.Window
 {	
 	public DrawingWidgetView drawingView{get; private set;}
@@ -24,10 +25,18 @@ public partial class MainWindow: Gtk.Window
 		
 		toolbarAlignment.Add (toolBarView);
 		DrawingBoxAlignment.Add(drawingView);
-		
+
+		VMMessenger.getMessenger().register<UpdateStatusMessage>(HandleStatusUpdateMessage);
+
 		ShowAll();
 	}
-	
+
+	private void HandleStatusUpdateMessage(UpdateStatusMessage msg)
+	{
+		uint id = 1;
+		_statusBar.Push(id, msg.Message);
+	}
+
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 	{
 		Application.Quit ();

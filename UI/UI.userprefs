@@ -1,18 +1,19 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="UI\Drawing\DrawingWidgetView.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="c:\Users\jqt3of5\Documents\Repos\StaticsSimulator\UI\ViewModel\Drawing\DrawingWidgetViewModel.cs">
     <Files>
-      <File FileName="UI\Drawing\DrawingWidgetView.cs" Line="25" Column="4" />
+      <File FileName="UI\Drawing\DrawingWidgetView.cs" Line="33" Column="25" />
       <File FileName="UI\MainWindow.cs" Line="1" Column="1" />
+      <File FileName="c:\Users\jqt3of5\Documents\Repos\StaticsSimulator\UI\ViewModel\Drawing\DrawingWidgetViewModel.cs" Line="106" Column="23" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="UI" expanded="True">
-            <Node name="Drawing" expanded="True" />
-          </Node>
           <Node name="ViewModel" expanded="True">
-            <Node name="References" expanded="True" selected="True" />
+            <Node name="References" expanded="True" />
+            <Node name="Drawing" expanded="True">
+              <Node name="DrawingWidgetViewModel.cs" selected="True" />
+            </Node>
           </Node>
         </State>
       </Pad>
