@@ -34,7 +34,7 @@ namespace ViewModel
 
 	
 		public DrawingObject ActiveObject { get { return _model.ActiveObject; } }
-		public PointD ActivePoint { get { return _model.ActivePoint; } }
+		public PointD ActivePoint { get { return _model.ActivePoint; } private set { _model.ActivePoint = value; } }
 		
 		public ToolBarViewModel.Tools selectedTool{get; private set;}
 		public DrawingObject TemporaryObject { get{ return _model.TemporaryObject;} }
@@ -54,7 +54,7 @@ namespace ViewModel
 		
 		private void RequestToolChange(NewToolChosenMessage tool)
 		{
-			Console.WriteLine("changed tool");
+			VMMessenger.getMessenger().sendMessage(new UpdateStatusMessage("Tool changed to " + tool.tool.ToString()));
 			selectedTool = tool.tool;
 		}
 		#endregion
@@ -91,9 +91,11 @@ namespace ViewModel
 			_mouseY = y;
 	
 			//probably need something to implement a "snap to" feature of moments and forces
-			var pointsList = _model._spatialTree.GetPointsInRange(MousePos, 10);
-			if (pointsList.Count > 0)
-				Console.WriteLine("X: " + pointsList[0].X + " Y: " + pointsList[0].Y);
+			//this should get refactored. It works, but thing to think about
+			_model.ActivePoint = _model._spatialTree.GetClosestPoint(MousePos);
+			if (_model.PointToParent.ContainsKey(_model.ActivePoint))
+				_model.ActiveObject = _model.PointToParent[_model.ActivePoint];
+
 
 			VMMessenger.getMessenger().sendMessage<RequestRedrawMessage>(new RequestRedrawMessage());
 		}
@@ -101,7 +103,7 @@ namespace ViewModel
 		public  void ButtonPressed (uint button)
 		{
 			DoubleInputView dialogView;
-		//	DoubleInputViewModel dialogViewModel;
+			DoubleInputModel dialogModel;
 
 			switch (button) {
 			case 1:
@@ -112,18 +114,30 @@ namespace ViewModel
 					break;
 				case ToolBarViewModel.Tools.FORCE:
 					//popup dialog that asks for mag/dir
-					dialogView = new DoubleInputView(2);
+					dialogModel = new DoubleInputModel(2); 
+					dialogView = new DoubleInputView(dialogModel);
 					dialogView.ShowAll();
-					if (ActiveObject != null && dialogView._inputs != null)
-						ActiveObject.AddForce (new Core.Tuple<PointD,double, double> (MousePos,dialogView._inputs[0], dialogView._inputs[1]));
+					dialogView.Run();
+
+					if (ActiveObject != null && dialogModel._inputs != null){
+						ActiveObject.AddForce (new Core.Tuple<PointD,double, double> (ActivePoint,dialogModel._inputs[0], dialogModel._inputs[1]));
+						Console.WriteLine("B: " + dialogModel._inputs[0] + " C: " + dialogModel._inputs[0]);
+					}
+
+
+
 					break;
 					
 				case ToolBarViewModel.Tools.MOMENT:
 					//popup dialog that asks for mag
-					dialogView = new DoubleInputView(1);
+					dialogModel = new DoubleInputModel(1); 
+					dialogView = new DoubleInputView(dialogModel);
 					dialogView.ShowAll();
-					if (ActiveObject != null && dialogView._inputs != null)
-						ActiveObject.AddMoment(new Core.Tuple<PointD, double>(MousePos,dialogView._inputs[0]));
+					dialogView.Run();
+
+					if (ActiveObject != null && dialogModel._inputs != null)
+						ActiveObject.AddMoment (new Core.Tuple<PointD,double> (ActivePoint,dialogModel._inputs[0]));
+					
 					break;
 					
 				case ToolBarViewModel.Tools.CONNECTED:

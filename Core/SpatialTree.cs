@@ -40,7 +40,78 @@ namespace Core
 		#region Search
 		public PointD GetClosestPoint (PointD point)
 		{
-			throw new NotImplementedException();
+			return GetClosestPoint(point, _root);
+		}
+		public PointD GetClosestPoint (PointD point, Node node)
+		{
+			if (node == null)
+				return new PointD();
+
+			double distanceSqA = double.MaxValue;
+			PointD closestPointA = new PointD();
+			PointD closestPointB = new PointD();
+
+			//this is a leaf node
+			if (node._left == null && node._right == null) 
+			{
+				foreach (PointD pt in node._bucket)
+				{
+					
+					if( (pt.X - point.X)*(pt.X - point.X) + 
+					   (pt.Y - point.Y)*(pt.Y - point.Y) < distanceSqA)
+					{
+						closestPointA = pt;
+						distanceSqA = (pt.X - point.X)*(pt.X - point.X) + (pt.Y - point.Y)*(pt.Y - point.Y);
+					}
+				}
+				return closestPointA;
+			}
+
+			switch (node.split)
+			{
+			case Node.Type.X:
+				if (point.Y > node._val){
+					closestPointA = GetClosestPoint(point, node._left);
+				}else{
+					closestPointA = GetClosestPoint(point, node._right);
+				}
+				break;
+			case Node.Type.Y:
+				if (point.X < node._val){
+					closestPointA = GetClosestPoint(point, node._left);
+				}else{
+					closestPointA = GetClosestPoint(point, node._right);
+				}	
+				break;
+			}
+
+			distanceSqA = (closestPointA.X - point.X)*(closestPointA.X - point.X) + (closestPointA.Y - point.Y)*(closestPointA.Y - point.Y);
+
+			switch (node.split)
+			{
+			case Node.Type.X:
+				if (point.Y > node._val){
+					if ((point.Y - node._val)*(point.Y - node._val) <= distanceSqA)
+						closestPointB = GetClosestPoint(point, node._right);
+				}else{
+					if ((point.Y - node._val)*(point.Y - node._val) < distanceSqA)
+						closestPointB = GetClosestPoint(point, node._left);
+				}
+				break;
+			case Node.Type.Y:
+				if (point.X < node._val){
+					if ((point.X - node._val)*(point.X - node._val) <= distanceSqA)
+						closestPointB = GetClosestPoint(point, node._right);
+				}else{
+					if ((point.X - node._val)*(point.X - node._val) < distanceSqA)
+						closestPointB = GetClosestPoint(point, node._left);
+				}	
+				break;
+			}
+
+			var distanceSqB = (closestPointB.X - point.X)*(closestPointB.X - point.X) + (closestPointB.Y - point.Y)*(closestPointB.Y - point.Y);
+			return distanceSqA < distanceSqB ? closestPointA : closestPointB;
+
 		}
 		public List<PointD> GetPointsInRange (PointD point, double radius)
 		{

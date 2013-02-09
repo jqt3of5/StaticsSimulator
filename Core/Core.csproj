@@ -53,11 +53,11 @@
     <Compile Include="gtk-gui\generated.cs" />
     <Compile Include="UI\DialogBoxes\DoubleInputView.cs" />
     <Compile Include="gtk-gui\Core.UI.DoubleInputView.cs" />
-    <Compile Include="ViewModel\DialogBoxes\DoubleInputViewModel.cs" />
     <Compile Include="Unit Tests\SpatialTreeTest.cs" />
     <Compile Include="Tuple.cs" />
     <Compile Include="SpatialTree.cs" />
     <Compile Include="DrawingObject.cs" />
+    <Compile Include="ViewModel\DialogBoxes\DoubleInputModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="gtk-gui\gui.stetic" />

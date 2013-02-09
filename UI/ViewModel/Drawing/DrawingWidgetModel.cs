@@ -15,18 +15,27 @@ namespace ViewModel
 		public PointD ActivePoint{ get; set; }
 		public SpatialTree _spatialTree;
 
+		public Dictionary<PointD, DrawingObject> PointToParent{ get; set; }
+
+
 		public DrawingWidgetModel ()
 
 		{
 			Objects = new List<DrawingObject>();
 			_spatialTree = new SpatialTree();
 			TemporaryObject = new DrawingObject();
+			PointToParent = new Dictionary<PointD, DrawingObject>();
 		}
 		
-		public void commitTemporaryObject()
+		public void commitTemporaryObject ()
 		{
-			Objects.Add(TemporaryObject);
-			_spatialTree.AddObject(TemporaryObject);
+			Objects.Add (TemporaryObject);
+			_spatialTree.AddObject (TemporaryObject);
+			foreach (PointD pt in TemporaryObject.points) 
+			{
+				PointToParent.Add(pt, TemporaryObject);
+			}
+
 			ActiveObject = TemporaryObject;
 
 			TemporaryObject = new DrawingObject();

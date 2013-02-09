@@ -165,6 +165,51 @@ namespace Core
 			}
 
 		}
+		[Test()]
+		public void GetClosestTest ()
+		{
+			SpatialTree tree = new SpatialTree ();
+			List<PointD> points = new List<PointD> ();
+			Random rand = new Random ();
+			
+			//initialize the list
+			for (int i = 0; i < 10000; ++i) 
+			{
+				points.Add (new PointD (rand.Next (1000), rand.Next (1000)));
+			}
+			
+			//insert them all into the list
+			foreach (PointD pt in points) 
+			{
+				tree.addPoint (pt);
+			}
+			for (int i = 0; i < 10000; ++i) 
+			{
+				var point = new PointD(rand.Next(1000), rand.Next(1000));
+				var found = tree.GetClosestPoint(point);
+
+				PointD closestPoint = new PointD();
+				double distanceSq = double.MaxValue;
+
+				foreach(PointD pt in points)
+				{
+					if ((pt.X-point.X)*(pt.X-point.X) + 
+					    (pt.Y-point.Y)*(pt.Y-point.Y) < distanceSq) 
+					{
+						closestPoint = pt;
+						distanceSq = (pt.X-point.X)*(pt.X-point.X) + (pt.Y-point.Y)*(pt.Y-point.Y);
+					}
+				}
+				var dist = (found.X - point.X)*(found.X - point.X) + (found.Y - point.Y)*(found.Y - point.Y);
+				Assert.AreEqual(distanceSq, dist);
+
+
+			}
+				
+
+			
+		}
+
 	}
 }
 
