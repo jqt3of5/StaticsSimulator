@@ -5,36 +5,36 @@ namespace Core
 {
 	public class DrawingObject
 	{
-		public List<Tuple<PointD, double>> _moments;
-		public List<Tuple<PointD, double, double>> _forces;
-		public List<PointD> points;
-		public List<Tuple<PointD,PointD>> lines;
+		public List<Tuple<PointDouble, double>> _moments;
+		public List<Tuple<PointDouble, double, double>> _forces;
+		public List<PointDouble> points;
+		public List<Tuple<PointDouble,PointDouble>> lines;
 
 
 
 
-		private PointD firstPoint;
-		private PointD lastPoint;
+		private PointDouble firstPoint;
+		private PointDouble lastPoint;
 
 
 
 		public DrawingObject ()
 		{
-			points = new List<PointD>();
-			lines = new List<Tuple<PointD, PointD>>();
-			_moments = new List<Tuple<PointD, double>>();
-			_forces = new List<Tuple<PointD, double, double>>();
+			points = new List<PointDouble>();
+			lines = new List<Tuple<PointDouble, PointDouble>>();
+			_moments = new List<Tuple<PointDouble, double>>();
+			_forces = new List<Tuple<PointDouble, double, double>>();
 
 		}
-		public void AddMoment(Tuple<PointD, double> moment)
+		public void AddMoment(Tuple<PointDouble, double> moment)
 		{
 			_moments.Add(moment);
 		}
-		public void AddForce(Tuple<PointD, double, double> force)
+		public void AddForce(Tuple<PointDouble, double, double> force)
 		{
 			_forces.Add(force);
 		}
-		public void AddPoint(PointD point)
+		public void AddPoint(PointDouble point)
 		{
 			if (points.Count == 0)
 				firstPoint = point;
@@ -42,7 +42,7 @@ namespace Core
 			points.Add(point);
 			
 			if (points.Count > 1)
-				lines.Add(new Tuple<PointD, PointD>(lastPoint, point));
+				lines.Add(new Tuple<PointDouble, PointDouble>(lastPoint, point));
 			
 			lastPoint = point;
 
@@ -51,7 +51,7 @@ namespace Core
 		}
 		public void Connect()
 		{
-			lines.Add(new Tuple<PointD, PointD>(firstPoint, lastPoint));
+			lines.Add(new Tuple<PointDouble, PointDouble>(firstPoint, lastPoint));
 		}
 		
 	}

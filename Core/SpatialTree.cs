@@ -11,7 +11,7 @@ namespace Core
 		public enum Type {X, Y};
 
 		//Leaf data
-		public List<PointD> _bucket;
+		public List<PointDouble> _bucket;
 
 		//Internal node data
 		public double _val;
@@ -20,7 +20,7 @@ namespace Core
 
 		public Node()
 		{
-			_bucket = new List<PointD>();
+			_bucket = new List<PointDouble>();
 			_left = null;
 			_right = null;
 		}
@@ -38,23 +38,24 @@ namespace Core
 		}
 
 		#region Search
-		public PointD GetClosestPoint (PointD point)
+		public PointDouble GetClosestPoint (PointDouble point)
 		{
 			return GetClosestPoint(point, _root);
 		}
-		public PointD GetClosestPoint (PointD point, Node node)
+		public PointDouble GetClosestPoint (PointDouble point, Node node)
 		{
 			if (node == null)
-				return new PointD();
+				return new PointDouble();
 
 			double distanceSqA = double.MaxValue;
-			PointD closestPointA = new PointD();
-			PointD closestPointB = new PointD();
+			double distanceSqB = double.MaxValue;
+			PointDouble closestPointA = null;
+			PointDouble closestPointB = null;
 
 			//this is a leaf node
 			if (node._left == null && node._right == null) 
 			{
-				foreach (PointD pt in node._bucket)
+				foreach (PointDouble pt in node._bucket)
 				{
 					
 					if( (pt.X - point.X)*(pt.X - point.X) + 
@@ -84,8 +85,9 @@ namespace Core
 				}	
 				break;
 			}
+			if (closestPointA != null)
+				distanceSqA = (closestPointA.X - point.X)*(closestPointA.X - point.X) + (closestPointA.Y - point.Y)*(closestPointA.Y - point.Y);
 
-			distanceSqA = (closestPointA.X - point.X)*(closestPointA.X - point.X) + (closestPointA.Y - point.Y)*(closestPointA.Y - point.Y);
 
 			switch (node.split)
 			{
@@ -108,19 +110,19 @@ namespace Core
 				}	
 				break;
 			}
-
-			var distanceSqB = (closestPointB.X - point.X)*(closestPointB.X - point.X) + (closestPointB.Y - point.Y)*(closestPointB.Y - point.Y);
+			if (closestPointB != null)
+				distanceSqB = (closestPointB.X - point.X)*(closestPointB.X - point.X) + (closestPointB.Y - point.Y)*(closestPointB.Y - point.Y);
 			return distanceSqA < distanceSqB ? closestPointA : closestPointB;
 
 		}
-		public List<PointD> GetPointsInRange (PointD point, double radius)
+		public List<PointDouble> GetPointsInRange (PointDouble point, double radius)
 		{
-			var points = new List<PointD>();
+			var points = new List<PointDouble>();
 			GetPointsInRange(point, radius*radius, _root, points);
 
 			return points;
 		}
-		public void GetPointsInRange (PointD point, double radsquare, Node node, List<PointD> listOfPoints)
+		public void GetPointsInRange (PointDouble point, double radsquare, Node node, List<PointDouble> listOfPoints)
 		{
 			if (node == null)
 				return;
@@ -128,7 +130,7 @@ namespace Core
 			//this is a leaf node
 			if (node._left == null && node._right == null) 
 			{
-				foreach (PointD pt in node._bucket)
+				foreach (PointDouble pt in node._bucket)
 				{
 
 					if( (pt.X - point.X)*(pt.X - point.X) + 
@@ -179,16 +181,16 @@ namespace Core
 		{
 			//should do something smart here... So that we get a more balanced tree.
 			//things todo
-			foreach (PointD pt in obj.points) 
+			foreach (PointDouble pt in obj.points) 
 			{
 				addPoint(pt);
 			}
 		}
-		public void addPoint(PointD point)
+		public void addPoint(PointDouble point)
 		{
 			addPoint(point, _root);
 		}
-		public void addPoint (PointD point, Node node)
+		public void addPoint (PointDouble point, Node node)
 		{
 			//if we have reached a leaf node
 			if (node == null)
@@ -199,7 +201,7 @@ namespace Core
 				if (node._bucket.Count > _bucketSize) {
 
 					node._val = 0.0;
-					foreach (PointD pt in node._bucket)
+					foreach (PointDouble pt in node._bucket)
 					{
 						if (node.split == Node.Type.X)
 							node._val += pt.Y;
@@ -212,7 +214,7 @@ namespace Core
 					node._left = new Node ();
 					node._right = new Node ();
 
-					foreach(PointD pt in node._bucket)
+					foreach(PointDouble pt in node._bucket)
 					{
 						if (node.split == Node.Type.X)
 							if (pt.Y > node._val)

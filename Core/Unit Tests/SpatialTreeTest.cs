@@ -14,16 +14,16 @@ namespace Core
 		public void Insertion ()
 		{
 			SpatialTree tree = new SpatialTree();
-			List<PointD> points = new List<PointD>();
-			points.Add (new PointD(0,0));
-			points.Add (new PointD(50,50));
-			points.Add (new PointD(0,50));
-			points.Add (new PointD(50,0));
-			points.Add (new PointD(25,25));
-			points.Add (new PointD(25,0));
-			points.Add (new PointD(0,25));
+			List<PointDouble> points = new List<PointDouble>();
+			points.Add (new PointDouble(0,0));
+			points.Add (new PointDouble(50,50));
+			points.Add (new PointDouble(0,50));
+			points.Add (new PointDouble(50,0));
+			points.Add (new PointDouble(25,25));
+			points.Add (new PointDouble(25,0));
+			points.Add (new PointDouble(0,25));
 
-			foreach(PointD pt in points)
+			foreach(PointDouble pt in points)
 				tree.addPoint(pt);
 
 			Assert.AreEqual(0, tree._root._bucket.Count);
@@ -35,23 +35,23 @@ namespace Core
 		public void Lookup ()
 		{
 			SpatialTree tree = new SpatialTree();
-			List<PointD> points = new List<PointD>();
+			List<PointDouble> points = new List<PointDouble>();
 
-			points.Add (new PointD(0,0));
-			points.Add (new PointD(0,10));
-			points.Add (new PointD(0,20));
-			points.Add (new PointD(0,30));
-			points.Add (new PointD(0,40));
-			points.Add (new PointD(0,50));
-			points.Add (new PointD(0,60));
+			points.Add (new PointDouble(0,0));
+			points.Add (new PointDouble(0,10));
+			points.Add (new PointDouble(0,20));
+			points.Add (new PointDouble(0,30));
+			points.Add (new PointDouble(0,40));
+			points.Add (new PointDouble(0,50));
+			points.Add (new PointDouble(0,60));
 
-			points.Add (new PointD(0,70));
+			points.Add (new PointDouble(0,70));
 
-			foreach(PointD pt in points)
+			foreach(PointDouble pt in points)
 				tree.addPoint(pt);
 			
 
-			var result = tree.GetPointsInRange(new PointD(1,1), 15);
+			var result = tree.GetPointsInRange(new PointDouble(1,1), 15);
 
 			Assert.AreEqual(2, result.Count);
 		}
@@ -61,18 +61,18 @@ namespace Core
 		public void StressTest ()
 		{
 			SpatialTree tree = new SpatialTree ();
-			List<PointD> points = new List<PointD> ();
+			List<PointDouble> points = new List<PointDouble> ();
 			Random rand = new Random ();
 
 			//initialize the list
 			for (int i = 0; i < 10000; ++i) 
 			{
-				points.Add (new PointD (rand.Next (1000), rand.Next (1000)));
+				points.Add (new PointDouble (rand.Next (1000), rand.Next (1000)));
 			}
 
 			DateTime start = DateTime.Now;
 			//insert them all into the list
-			foreach (PointD pt in points) 
+			foreach (PointDouble pt in points) 
 			{
 				tree.addPoint (pt);
 			}
@@ -83,7 +83,7 @@ namespace Core
 			start = DateTime.Now;
 			for (int i = 0; i < 10000; ++i) 
 			{
-				tree.GetPointsInRange(new PointD(rand.Next(1000), rand.Next(1000)), 10);
+				tree.GetPointsInRange(new PointDouble(rand.Next(1000), rand.Next(1000)), 10);
 			}
 			stop  = DateTime.Now;
 
@@ -94,12 +94,12 @@ namespace Core
 			
 			start = DateTime.Now;
 
-			List<PointD> found;
+			List<PointDouble> found;
 			for (int i = 0; i < 10000; ++i) 
 			{
-				found = new List<PointD>();
-				var lookup = new PointD(rand.Next(1000), rand.Next(1000));
-				foreach(PointD pt in points)
+				found = new List<PointDouble>();
+				var lookup = new PointDouble(rand.Next(1000), rand.Next(1000));
+				foreach(PointDouble pt in points)
 				{
 					if ((pt.X-lookup.X)*(pt.X-lookup.X) + 
 					    (pt.Y-lookup.Y)*(pt.Y-lookup.Y) < 100) 
@@ -120,29 +120,29 @@ namespace Core
 		public void CorrectnessTest ()
 		{
 			SpatialTree tree = new SpatialTree ();
-			List<PointD> points = new List<PointD> ();
+			List<PointDouble> points = new List<PointDouble> ();
 			Random rand = new Random ();
 
 			//initialize the list
 			for (int i = 0; i < 10000; ++i) 
 			{
-				points.Add (new PointD (rand.Next (1000), rand.Next (1000)));
+				points.Add (new PointDouble (rand.Next (1000), rand.Next (1000)));
 			}
 			
 			//insert them all into the list
-			foreach (PointD pt in points) 
+			foreach (PointDouble pt in points) 
 			{
 				tree.addPoint (pt);
 			}
-			List<PointD> found1;
-			List<PointD> found2;
+			List<PointDouble> found1;
+			List<PointDouble> found2;
 			for (int i = 0; i < 10000; ++i) 
 			{
-				var point = new PointD(rand.Next(1000), rand.Next(1000));
+				var point = new PointDouble(rand.Next(1000), rand.Next(1000));
 				found1 = tree.GetPointsInRange( point, 10);
 
-				found2 = new List<PointD>();
-				foreach(PointD pt in points)
+				found2 = new List<PointDouble>();
+				foreach(PointDouble pt in points)
 				{
 					if ((pt.X-point.X)*(pt.X-point.X) + 
 					    (pt.Y-point.Y)*(pt.Y-point.Y) < 100.0) 
@@ -151,11 +151,11 @@ namespace Core
 					}
 				}
 
-				foreach(PointD pt in found1)
+				foreach(PointDouble pt in found1)
 				{
 					Assert.AreEqual(true, found2.Contains(pt));
 				}
-				foreach(PointD pt in found2)
+				foreach(PointDouble pt in found2)
 				{
 					Assert.AreEqual(true, found1.Contains(pt));
 				}
@@ -169,29 +169,29 @@ namespace Core
 		public void GetClosestTest ()
 		{
 			SpatialTree tree = new SpatialTree ();
-			List<PointD> points = new List<PointD> ();
+			List<PointDouble> points = new List<PointDouble> ();
 			Random rand = new Random ();
 			
 			//initialize the list
 			for (int i = 0; i < 10000; ++i) 
 			{
-				points.Add (new PointD (rand.Next (1000), rand.Next (1000)));
+				points.Add (new PointDouble (rand.Next (1000), rand.Next (1000)));
 			}
 			
 			//insert them all into the list
-			foreach (PointD pt in points) 
+			foreach (PointDouble pt in points) 
 			{
 				tree.addPoint (pt);
 			}
 			for (int i = 0; i < 10000; ++i) 
 			{
-				var point = new PointD(rand.Next(1000), rand.Next(1000));
+				var point = new PointDouble(rand.Next(1000), rand.Next(1000));
 				var found = tree.GetClosestPoint(point);
 
-				PointD closestPoint = new PointD();
+				PointDouble closestPoint = new PointDouble();
 				double distanceSq = double.MaxValue;
 
-				foreach(PointD pt in points)
+				foreach(PointDouble pt in points)
 				{
 					if ((pt.X-point.X)*(pt.X-point.X) + 
 					    (pt.Y-point.Y)*(pt.Y-point.Y) < distanceSq) 

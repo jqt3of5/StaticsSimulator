@@ -15,25 +15,27 @@ namespace UI
 			this.Build ();
 			viewModel = vm;
 			
-			tool11.Changed += ToolSelected;
-			tool21.Changed += ToolSelected;
-			tool3.Changed += ToolSelected;
-			tool4.Changed += ToolSelected; 
+			connectedTool.Changed += ToolSelected;
+			unconnectedTool.Changed += ToolSelected;
+			forceTool.Changed += ToolSelected;
+			momentTool.Changed += ToolSelected; 
+			selectionTool.Changed += ToolSelected; 
 		}	
 		
 		private void ToolSelected(object sender, ChangedArgs args)
 		{
 			
 			var tbButton = sender as Gtk.RadioAction;
-			if (tbButton == tool11 && tbButton.Active)
+			if (tbButton == connectedTool && tbButton.Active)
 				viewModel.selectedTool = ToolBarViewModel.Tools.CONNECTED;
-			else if (tbButton == tool21 && tbButton.Active)
+			else if (tbButton == unconnectedTool && tbButton.Active)
 				viewModel.selectedTool = ToolBarViewModel.Tools.UNCONNECTED;
-			else if (tbButton == tool3 && tbButton.Active)
-				viewModel.selectedTool = ToolBarViewModel.Tools.MOMENT;
-			else if (tbButton == tool4 && tbButton.Active)
+			else if (tbButton == forceTool && tbButton.Active)
 				viewModel.selectedTool = ToolBarViewModel.Tools.FORCE;
-			 
+			else if (tbButton == momentTool && tbButton.Active)
+				viewModel.selectedTool = ToolBarViewModel.Tools.MOMENT;
+			else if (tbButton == selectionTool && tbButton.Active)
+				viewModel.selectedTool = ToolBarViewModel.Tools.SELECTION;
 			 
 		}
 		

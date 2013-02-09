@@ -54,7 +54,7 @@ namespace UI
 		#endregion
 		
 		#region Draw Functions
-		private void DrawMoment(Context ctx, Tuple<PointD, double> moment)
+		private void DrawMoment(Context ctx, Tuple<PointDouble, double> moment)
 		{
 			ctx.Save ();
 		
@@ -65,12 +65,12 @@ namespace UI
 			ctx.Restore();
 			
 		}
-		private void DrawForce(Context ctx, Tuple<PointD, double, double> force)
+		private void DrawForce(Context ctx, Tuple<PointDouble, double, double> force)
 		{
 			ctx.Save ();
 			ctx.Color = new Cairo.Color(0,0,0);
 			
-			ctx.MoveTo(force.Item1);
+			ctx.MoveTo(force.Item1.toPointD());
 			ctx.LineTo(force.Item1.X + force.Item3 * Math.Cos(force.Item2), 
 			           force.Item1.Y + force.Item3 * Math.Sin (force.Item2));
 			ctx.Rectangle(force.Item1.X-5, force.Item1.Y-5, 10,10);
@@ -87,22 +87,22 @@ namespace UI
 			ctx.Color = new Cairo.Color (0, 0, 0);
 			
 			ctx.LineWidth = 1;
-			foreach (Tuple<PointD, PointD> line in body.lines) {
-				ctx.MoveTo (line.Item1);
-				ctx.LineTo (line.Item2);
+			foreach (Tuple<PointDouble, PointDouble> line in body.lines) {
+				ctx.MoveTo (line.Item1.toPointD());
+				ctx.LineTo (line.Item2.toPointD());
 			}
 			
 			ctx.Stroke ();
 			
-			foreach (PointD point in body.points) {
+			foreach (PointDouble point in body.points) {
 				ctx.Rectangle (point.X - 5, point.Y - 5, 10, 10);
 				ctx.Fill ();
 			}
-			foreach (Tuple<PointD, double, double> force in body._forces) {
+			foreach (Tuple<PointDouble, double, double> force in body._forces) {
 				DrawForce (ctx, force);
 			}
 			
-			foreach (Tuple<PointD, double> moment in body._moments) {
+			foreach (Tuple<PointDouble, double> moment in body._moments) {
 				DrawMoment (ctx, moment);
 			}
 			
@@ -124,10 +124,10 @@ namespace UI
 				if (viewModel.IsDrawingObject){
 					ctx.Save();
 					ctx.Color = new Cairo.Color(1,0,0);
-					ctx.MoveTo(viewModel.LastPos);
-					ctx.LineTo(viewModel.MousePos);
+					ctx.MoveTo(viewModel.LastPos.toPointD());
+					ctx.LineTo(viewModel.MousePos.toPointD());
 					ctx.Stroke();
-					ctx.Rectangle(viewModel.MousePos, 10,10);
+					ctx.Rectangle(viewModel.MousePos.toPointD(), 10,10);
 					ctx.Fill();
 					ctx.Restore();
 				}

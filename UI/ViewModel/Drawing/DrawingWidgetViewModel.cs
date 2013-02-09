@@ -21,8 +21,8 @@ namespace ViewModel
 		
 		#region Properties
 		
-		public PointD MousePos { get{ return new PointD(_mouseX, _mouseY);} }
-		public PointD LastPos { get{ return new PointD(_lastX, _lastY); } }
+		public PointDouble MousePos { get{ return new PointDouble(_mouseX, _mouseY);} }
+		public PointDouble LastPos { get{ return new PointDouble(_lastX, _lastY); } }
 
 		public bool IsDrawingObject{get; private set;}
 
@@ -32,7 +32,7 @@ namespace ViewModel
 
 	
 		public DrawingObject ActiveObject { get { return _model.ActiveObject; } }
-		public PointD ActivePoint { get { return _model.ActivePoint; } private set { _model.ActivePoint = value; } }
+		public PointDouble ActivePoint { get { return _model.ActivePoint; } private set { _model.ActivePoint = value; } }
 		
 		public ToolBarViewModel.Tools selectedTool{get; private set;}
 		public DrawingObject TemporaryObject { get{ return _model.TemporaryObject;} }
@@ -91,14 +91,14 @@ namespace ViewModel
 			//probably need something to implement a "snap to" feature of moments and forces
 			//this should get refactored. It works, but thing to think about
 			_model.ActivePoint = _model._spatialTree.GetClosestPoint(MousePos);
-			if (_model.PointToParent.ContainsKey(_model.ActivePoint))
+			if (_model.ActivePoint != null && _model.PointToParent.ContainsKey(_model.ActivePoint))
 				_model.ActiveObject = _model.PointToParent[_model.ActivePoint];
 
 
 			VMMessenger.getMessenger().sendMessage<RequestRedrawMessage>(new RequestRedrawMessage());
 
 		}
-		
+	
 		public  void ButtonPressed (uint button)
 		{
 			DoubleInputView dialogView;
@@ -109,8 +109,12 @@ namespace ViewModel
 				
 				switch (selectedTool) {
 				case ToolBarViewModel.Tools.SELECTION:
-					
+					//should put this in a dragged handler. 
+					//do both messages get sent? need to suppress changing the active object if they do. 
+					ActivePoint.X = _mouseX;
+					ActivePoint.Y = _mouseY;
 					break;
+
 				case ToolBarViewModel.Tools.FORCE:
 					//popup dialog that asks for mag/dir
 					dialogModel = new DoubleInputModel(2, new string[]{"Angle", "Magnitude"}); 
@@ -119,8 +123,8 @@ namespace ViewModel
 					dialogView.Run();
 
 					if (ActiveObject != null && dialogModel._inputs != null)
-						ActiveObject.AddForce (new Tuple<PointD,double, double> (ActivePoint,dialogModel._inputs[0],dialogModel._inputs[1]));
-				break;
+						ActiveObject.AddForce (new Tuple<PointDouble,double, double> (ActivePoint,dialogModel._inputs[0],dialogModel._inputs[1]));
+					break;
 					
 				case ToolBarViewModel.Tools.MOMENT:
 					//popup dialog that asks for mag
@@ -130,7 +134,7 @@ namespace ViewModel
 					dialogView.Run();
 
 					if (ActiveObject != null && dialogModel._inputs != null)
-						ActiveObject.AddMoment (new Tuple<PointD,double> (ActivePoint,dialogModel._inputs[0]));
+						ActiveObject.AddMoment (new Tuple<PointDouble,double> (ActivePoint,dialogModel._inputs[0]));
 					
 					break;
 					
