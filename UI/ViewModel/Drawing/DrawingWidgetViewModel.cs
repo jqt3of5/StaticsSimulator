@@ -26,6 +26,8 @@ namespace ViewModel
 
 		public bool IsDrawingObject{get; private set;}
 
+		public bool IsClicked {get; private set;}
+
 		public List<DrawingObject> ObjectsToDraw {
 			get { return _model.Objects;}
 		}
@@ -87,18 +89,41 @@ namespace ViewModel
 			
 			_mouseX = x;
 			_mouseY = y;
-			
-			//probably need something to implement a "snap to" feature of moments and forces
-			//this should get refactored. It works, but thing to think about
-			_model.ActivePoint = _model._spatialTree.GetClosestPoint(MousePos);
-			if (_model.ActivePoint != null && _model.PointToParent.ContainsKey(_model.ActivePoint))
-				_model.ActiveObject = _model.PointToParent[_model.ActivePoint];
 
+			
+			if (IsClicked && selectedTool == ToolBarViewModel.Tools.SELECTION) 
+			{
+
+				_model.ActivePoint.X = _mouseX;
+				_model.ActivePoint.Y = _mouseY;
+
+			} else {
+
+				_model.ActivePoint = _model._spatialTree.GetClosestPoint (MousePos);
+				if (_model.ActivePoint != null && _model.PointToParent.ContainsKey (_model.ActivePoint))
+					_model.ActiveObject = _model.PointToParent [_model.ActivePoint];
+
+			}
 
 			VMMessenger.getMessenger().sendMessage<RequestRedrawMessage>(new RequestRedrawMessage());
+			VMMessenger.getMessenger().sendMessage<UpdatePositionStatusMessage>(new UpdatePositionStatusMessage(_mouseX, _mouseY));
 
 		}
 	
+		public void ButtonReleased (uint button)
+		{
+			switch (button) 
+			{
+			case 1:
+				switch (selectedTool)
+				{
+				case ToolBarViewModel.Tools.SELECTION:
+					IsClicked = false;
+					break;
+				}
+				break;
+			}
+		}
 		public  void ButtonPressed (uint button)
 		{
 			DoubleInputView dialogView;
@@ -109,10 +134,8 @@ namespace ViewModel
 				
 				switch (selectedTool) {
 				case ToolBarViewModel.Tools.SELECTION:
-					//should put this in a dragged handler. 
-					//do both messages get sent? need to suppress changing the active object if they do. 
-					ActivePoint.X = _mouseX;
-					ActivePoint.Y = _mouseY;
+					IsClicked = true;
+
 					break;
 
 				case ToolBarViewModel.Tools.FORCE:
@@ -141,13 +164,15 @@ namespace ViewModel
 				case ToolBarViewModel.Tools.CONNECTED:
 					if (!IsDrawingObject)
 						BeginDrawingBody ();
-					_model.TemporaryObject.AddPoint (MousePos);
+					ActivePoint = MousePos;
+					_model.TemporaryObject.AddPoint (ActivePoint);
                     break;
 					
 				case ToolBarViewModel.Tools.UNCONNECTED:
 					if (!IsDrawingObject)
 						BeginDrawingBody ();
-					_model.TemporaryObject.AddPoint (MousePos);
+					ActivePoint = MousePos;
+					_model.TemporaryObject.AddPoint (ActivePoint);
 					break;
 				
 				default:

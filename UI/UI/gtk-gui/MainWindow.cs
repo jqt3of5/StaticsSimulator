@@ -28,6 +28,7 @@ public partial class MainWindow
 	private global::Gtk.Alignment DrawingBoxAlignment;
 	private global::Gtk.Label GtkLabel3;
 	private global::Gtk.Statusbar _statusBar;
+	private global::Gtk.Label posLabel;
 	
 	protected virtual void Build ()
 	{
@@ -66,7 +67,7 @@ public partial class MainWindow
 		this.refreshAction.Group = this.newAction.Group;
 		w1.Add (this.refreshAction, null);
 		this.redoAction = new global::Gtk.RadioAction ("redoAction", null, null, "gtk-redo", 0);
-		this.redoAction.Group = this.newAction.Group;
+		this.redoAction.Group = this.refreshAction.Group;
 		w1.Add (this.redoAction, null);
 		this.firstAction = new global::Gtk.Action ("firstAction", null, null, "gtk-goto-bottom");
 		w1.Add (this.firstAction, null);
@@ -134,11 +135,20 @@ public partial class MainWindow
 		this._statusBar = new global::Gtk.Statusbar ();
 		this._statusBar.Name = "_statusBar";
 		this._statusBar.Spacing = 6;
-		this.vbox1.Add (this._statusBar);
-		global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this._statusBar]));
+		// Container child _statusBar.Gtk.Box+BoxChild
+		this.posLabel = new global::Gtk.Label ();
+		this.posLabel.Name = "posLabel";
+		this.posLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("label1");
+		this._statusBar.Add (this.posLabel);
+		global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this._statusBar [this.posLabel]));
 		w7.Position = 2;
 		w7.Expand = false;
 		w7.Fill = false;
+		this.vbox1.Add (this._statusBar);
+		global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this._statusBar]));
+		w8.Position = 2;
+		w8.Expand = false;
+		w8.Fill = false;
 		this.Add (this.vbox1);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();

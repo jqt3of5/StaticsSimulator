@@ -42,6 +42,7 @@ namespace UI
 		
 		protected override bool OnMotionNotifyEvent (EventMotion evnt)
 		{
+
 			viewModel.MouseMoved(evnt.X, evnt.Y);
 			return base.OnMotionNotifyEvent (evnt);
 		}
@@ -50,7 +51,12 @@ namespace UI
 			viewModel.ButtonPressed(evnt.Button);
 			return base.OnButtonPressEvent (evnt);
 		}
-		
+		 
+		protected override bool OnButtonReleaseEvent (EventButton evnt)
+		{
+			viewModel.ButtonReleased(evnt.Button);
+			return base.OnButtonReleaseEvent (evnt);
+		}
 		#endregion
 		
 		#region Draw Functions

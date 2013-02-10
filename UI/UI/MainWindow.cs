@@ -27,8 +27,14 @@ public partial class MainWindow: Gtk.Window
 		DrawingBoxAlignment.Add(drawingView);
 
 		VMMessenger.getMessenger().register<UpdateStatusMessage>(HandleStatusUpdateMessage);
+		VMMessenger.getMessenger().register<UpdatePositionStatusMessage>(HandlePositionStatusUpdateMessage);
 
 		ShowAll();
+	}
+
+	private void HandlePositionStatusUpdateMessage (UpdatePositionStatusMessage msg)
+	{
+		posLabel.Text = "x: " + msg.X + " y: " + msg.Y;
 	}
 
 	private void HandleStatusUpdateMessage(UpdateStatusMessage msg)
