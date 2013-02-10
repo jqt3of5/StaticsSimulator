@@ -1,7 +1,5 @@
 using System;
 using Cairo;
-using Gtk;
-using Gdk;
 using Messenger;
 using Core.UI;
 using Core.VM;
@@ -115,29 +113,24 @@ namespace ViewModel
 					break;
 				case ToolBarViewModel.Tools.FORCE:
 					//popup dialog that asks for mag/dir
-					dialogModel = new DoubleInputModel(2); 
-					dialogView = new DoubleInputView(dialogModel);
-					dialogView.ShowAll();
-					dialogView.Run();
-
-					if (ActiveObject != null && dialogModel._inputs != null){
-						ActiveObject.AddForce (new Core.Tuple<PointD,double, double> (ActivePoint,dialogModel._inputs[0], dialogModel._inputs[1]));
-						Console.WriteLine("B: " + dialogModel._inputs[0] + " C: " + dialogModel._inputs[0]);
-					}
-
-
-
-					break;
-					
-				case ToolBarViewModel.Tools.MOMENT:
-					//popup dialog that asks for mag
-					dialogModel = new DoubleInputModel(1); 
+					dialogModel = new DoubleInputModel(2, new string[]{"Angle", "Magnitude"}); 
 					dialogView = new DoubleInputView(dialogModel);
 					dialogView.ShowAll();
 					dialogView.Run();
 
 					if (ActiveObject != null && dialogModel._inputs != null)
-						ActiveObject.AddMoment (new Core.Tuple<PointD,double> (ActivePoint,dialogModel._inputs[0]));
+						ActiveObject.AddForce (new Tuple<PointD,double, double> (ActivePoint,dialogModel._inputs[0],dialogModel._inputs[1]));
+				break;
+					
+				case ToolBarViewModel.Tools.MOMENT:
+					//popup dialog that asks for mag
+					dialogModel = new DoubleInputModel(1, new string[]{"Magnitude"}); 
+					dialogView = new DoubleInputView(dialogModel);
+					dialogView.ShowAll();
+					dialogView.Run();
+
+					if (ActiveObject != null && dialogModel._inputs != null)
+						ActiveObject.AddMoment (new Tuple<PointD,double> (ActivePoint,dialogModel._inputs[0]));
 					
 					break;
 					

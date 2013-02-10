@@ -1,6 +1,4 @@
 using System;
-using Gdk;
-using Gtk;
 using Messenger;
 namespace ViewModel
 {

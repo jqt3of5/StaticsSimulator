@@ -59,7 +59,7 @@ namespace UI
 			ctx.Save ();
 		
 			ctx.Color = new Cairo.Color(0,0,0);
-			ctx.Arc(moment.A.X, moment.A.Y, 20, 4, 2.28);
+			ctx.Arc(moment.Item1.X, moment.Item1.Y, 20, 4, 2.28);
 			ctx.Stroke();
 			
 			ctx.Restore();
@@ -70,9 +70,10 @@ namespace UI
 			ctx.Save ();
 			ctx.Color = new Cairo.Color(0,0,0);
 			
-			ctx.MoveTo(force.A);
-			ctx.LineTo(force.C*Math.Cos(force.B), force.C * Math.Sin (force.B));
-			ctx.Rectangle(force.A.X-5, force.A.Y-5, 10,10);
+			ctx.MoveTo(force.Item1);
+			ctx.LineTo(force.Item1.X + force.Item3 * Math.Cos(force.Item2), 
+			           force.Item1.Y + force.Item3 * Math.Sin (force.Item2));
+			ctx.Rectangle(force.Item1.X-5, force.Item1.Y-5, 10,10);
 			
 			
 			ctx.Stroke();
@@ -87,8 +88,8 @@ namespace UI
 			
 			ctx.LineWidth = 1;
 			foreach (Tuple<PointD, PointD> line in body.lines) {
-				ctx.MoveTo (line.A);
-				ctx.LineTo (line.B);
+				ctx.MoveTo (line.Item1);
+				ctx.LineTo (line.Item2);
 			}
 			
 			ctx.Stroke ();
