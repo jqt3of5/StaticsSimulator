@@ -97,9 +97,13 @@ namespace UI
 				ctx.MoveTo (line.Item1.toPointD());
 				ctx.LineTo (line.Item2.toPointD());
 			}
-			
+
+			if (body.points.Count > 1)
+				ctx.Rectangle(body._centerOfMass.X - 5, body._centerOfMass.Y - 5, 10, 10);  
 			ctx.Stroke ();
-			
+
+
+
 			foreach (PointDouble point in body.points) {
 				ctx.Rectangle (point.X - 5, point.Y - 5, 10, 10);
 				ctx.Fill ();

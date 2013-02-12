@@ -9,7 +9,7 @@ namespace Core
 		public List<Tuple<PointDouble, double, double>> _forces;
 		public List<PointDouble> points;
 		public List<Tuple<PointDouble,PointDouble>> lines;
-
+		public PointDouble _centerOfMass;
 
 
 
@@ -24,7 +24,7 @@ namespace Core
 			lines = new List<Tuple<PointDouble, PointDouble>>();
 			_moments = new List<Tuple<PointDouble, double>>();
 			_forces = new List<Tuple<PointDouble, double, double>>();
-
+			_centerOfMass = new PointDouble ();
 		}
 		public void AddMoment(Tuple<PointDouble, double> moment)
 		{
@@ -47,7 +47,20 @@ namespace Core
 			lastPoint = point;
 
 
-			
+			CalcCenterOfMass();
+		}
+		public void CalcCenterOfMass ()
+		{
+			_centerOfMass.X = 0;
+			_centerOfMass.Y = 0;
+			foreach (PointDouble pt in points) 
+			{
+				_centerOfMass.X += pt.X;
+				_centerOfMass.Y += pt.Y;
+			}
+
+			_centerOfMass.X /= points.Count;
+			_centerOfMass.Y /= points.Count;
 		}
 		public void Connect()
 		{

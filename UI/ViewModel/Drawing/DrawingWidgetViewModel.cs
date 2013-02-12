@@ -96,6 +96,7 @@ namespace ViewModel
 
 				_model.ActivePoint.X = _mouseX;
 				_model.ActivePoint.Y = _mouseY;
+				_model.ActiveObject.CalcCenterOfMass();
 
 			} else {
 
@@ -123,6 +124,8 @@ namespace ViewModel
 				}
 				break;
 			}
+
+
 		}
 		public  void ButtonPressed (uint button)
 		{

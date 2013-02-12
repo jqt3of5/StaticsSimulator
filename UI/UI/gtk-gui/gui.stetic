@@ -5,7 +5,6 @@
     <target-gtk-version>2.12</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="../../../../../../../usr/lib/monodevelop/AddIns/MonoDevelop.GtkCore/libstetic.dll" />
     <widget-library name="../../../bin/ViewModel.dll" />
     <widget-library name="../../../bin/Core.dll" />
     <widget-library name="../../../bin/UI.exe" internal="true" />
@@ -201,7 +200,16 @@
               <placeholder />
             </child>
             <child>
-              <placeholder />
+              <widget class="Gtk.Label" id="posLabel">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">label1</property>
+              </widget>
+              <packing>
+                <property name="Position">2</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
             </child>
           </widget>
           <packing>
@@ -214,7 +222,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="UI.ToolBarView" design-size="301 57">
+  <widget class="Gtk.Bin" id="UI.ToolBarView" design-size="528 57">
     <action-group name="Default">
       <action id="tool2">
         <property name="Type">Radio</property>
@@ -236,37 +244,51 @@
         <property name="Value">0</property>
         <property name="Group">group1</property>
       </action>
-      <action id="tool11">
+      <action id="connectedTool">
         <property name="Type">Radio</property>
-        <property name="Label" translatable="yes" />
+        <property name="Label" translatable="yes">_Connected</property>
+        <property name="ShortLabel" translatable="yes">_Connected</property>
         <property name="StockId">gtk-yes</property>
         <property name="DrawAsRadio">False</property>
         <property name="Active">False</property>
         <property name="Value">0</property>
         <property name="Group">group1</property>
       </action>
-      <action id="tool21">
+      <action id="unconnectedTool">
         <property name="Type">Radio</property>
-        <property name="Label" translatable="yes" />
+        <property name="Label" translatable="yes">_Unconencted</property>
+        <property name="ShortLabel" translatable="yes">_Unconencted</property>
         <property name="StockId">gtk-cancel</property>
         <property name="DrawAsRadio">False</property>
         <property name="Active">False</property>
         <property name="Value">0</property>
         <property name="Group">group1</property>
       </action>
-      <action id="tool3">
+      <action id="momentTool">
         <property name="Type">Radio</property>
-        <property name="Label" translatable="yes" />
+        <property name="Label" translatable="yes">_Moment</property>
+        <property name="ShortLabel" translatable="yes">_Moment</property>
         <property name="StockId">gtk-refresh</property>
         <property name="DrawAsRadio">False</property>
         <property name="Active">False</property>
         <property name="Value">0</property>
         <property name="Group">group1</property>
       </action>
-      <action id="tool4">
+      <action id="forceTool">
         <property name="Type">Radio</property>
-        <property name="Label" translatable="yes" />
+        <property name="Label" translatable="yes">_Force</property>
+        <property name="ShortLabel" translatable="yes">_Force</property>
         <property name="StockId">gtk-redo</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+      </action>
+      <action id="selectionTool">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes">_Selection</property>
+        <property name="ShortLabel" translatable="yes">_Selection</property>
+        <property name="StockId">gtk-add</property>
         <property name="DrawAsRadio">False</property>
         <property name="Active">False</property>
         <property name="Value">0</property>
@@ -280,10 +302,11 @@
         <property name="MemberName" />
         <property name="ShowArrow">False</property>
         <node name="toolbar4" type="Toolbar">
-          <node type="Toolitem" action="tool11" />
-          <node type="Toolitem" action="tool21" />
-          <node type="Toolitem" action="tool3" />
-          <node type="Toolitem" action="tool4" />
+          <node type="Toolitem" action="connectedTool" />
+          <node type="Toolitem" action="unconnectedTool" />
+          <node type="Toolitem" action="momentTool" />
+          <node type="Toolitem" action="forceTool" />
+          <node type="Toolitem" action="selectionTool" />
         </node>
       </widget>
     </child>

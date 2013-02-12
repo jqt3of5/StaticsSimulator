@@ -57,6 +57,8 @@
     <Compile Include="gtk-gui\generated.cs" />
     <Compile Include="gtk-gui\Core.UI.DoubleInputView.cs" />
     <Compile Include="PointDouble.cs" />
+    <Compile Include="ConnectedObject.cs" />
+    <Compile Include="UnconnectedObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
