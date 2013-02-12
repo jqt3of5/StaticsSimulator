@@ -7,6 +7,12 @@ namespace Core
 		public ConnectedObject ()
 		{
 		}
+
+		public void Connect()
+		{
+			lines.Add(new Tuple<PointDouble, PointDouble>(firstPoint, lastPoint));
+		}
+		
 	}
 }
 

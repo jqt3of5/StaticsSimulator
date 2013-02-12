@@ -23,7 +23,6 @@ namespace ViewModel
 		{
 			Objects = new List<DrawingObject>();
 			_spatialTree = new SpatialTree();
-			TemporaryObject = new DrawingObject();
 			PointToParent = new Dictionary<PointDouble, DrawingObject>();
 		}
 		
@@ -38,7 +37,7 @@ namespace ViewModel
 
 			ActiveObject = TemporaryObject;
 
-			TemporaryObject = new DrawingObject();
+
 		}
 		
 		

@@ -13,8 +13,8 @@ namespace Core
 
 
 
-		private PointDouble firstPoint;
-		private PointDouble lastPoint;
+		protected PointDouble firstPoint;
+		protected PointDouble lastPoint;
 
 
 
@@ -58,14 +58,11 @@ namespace Core
 				_centerOfMass.X += pt.X;
 				_centerOfMass.Y += pt.Y;
 			}
-
+			
 			_centerOfMass.X /= points.Count;
 			_centerOfMass.Y /= points.Count;
 		}
-		public void Connect()
-		{
-			lines.Add(new Tuple<PointDouble, PointDouble>(firstPoint, lastPoint));
-		}
+
 		
 	}
 }

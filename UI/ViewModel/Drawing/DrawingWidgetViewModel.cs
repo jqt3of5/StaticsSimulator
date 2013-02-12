@@ -37,7 +37,9 @@ namespace ViewModel
 		public PointDouble ActivePoint { get { return _model.ActivePoint; } private set { _model.ActivePoint = value; } }
 		
 		public ToolBarViewModel.Tools selectedTool{get; private set;}
-		public DrawingObject TemporaryObject { get{ return _model.TemporaryObject;} }
+		public DrawingObject TemporaryObject {
+			get{ return _model.TemporaryObject;}
+			private set{_model.TemporaryObject = value;}}
 		#endregion
 		
 		#region Constructors
@@ -75,7 +77,7 @@ namespace ViewModel
 		private void EndDrawingConnected ()
 		{
 			IsDrawingObject = false;
-			_model.TemporaryObject.Connect ();
+			(_model.TemporaryObject as ConnectedObject).Connect();
 			_model.commitTemporaryObject ();
 			VMMessenger.getMessenger().sendMessage(new UpdateStatusMessage("Finished drawing body"));
 		}
@@ -166,14 +168,20 @@ namespace ViewModel
 					
 				case ToolBarViewModel.Tools.CONNECTED:
 					if (!IsDrawingObject)
+					{
 						BeginDrawingBody ();
+						TemporaryObject = new ConnectedObject();
+					}
 					ActivePoint = MousePos;
 					_model.TemporaryObject.AddPoint (ActivePoint);
                     break;
 					
 				case ToolBarViewModel.Tools.UNCONNECTED:
 					if (!IsDrawingObject)
+					{
 						BeginDrawingBody ();
+						TemporaryObject = new UnconnectedObject();
+					}
 					ActivePoint = MousePos;
 					_model.TemporaryObject.AddPoint (ActivePoint);
 					break;
