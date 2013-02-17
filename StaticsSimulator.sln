@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controllers", "Core\Controllers\Controllers.csproj", "{2F2E59E0-8D2F-4E08-A7E3-438F8F827701}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Controllers", "Core\Controllers\Core.Controllers.csproj", "{2F2E59E0-8D2F-4E08-A7E3-438F8F827701}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Core\Data\Data.csproj", "{CFC62657-3094-4BC2-9263-D201A528ACB4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Data", "Core\Data\Core.Data.csproj", "{CFC62657-3094-4BC2-9263-D201A528ACB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger", "Core\Messenger\Messenger.csproj", "{4C336EB8-2CC3-487C-AAD1-4A5B17688382}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Messenger", "Core\Messenger\Core.Messenger.csproj", "{4C336EB8-2CC3-487C-AAD1-4A5B17688382}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI\UI.csproj", "{83702612-BCC1-477C-A7B6-5A1A00281B5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI.UI", "UI\UI\UI.UI.csproj", "{83702612-BCC1-477C-A7B6-5A1A00281B5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "UI\ViewModel\ViewModel.csproj", "{55FF2027-1864-46C6-848E-2901D5EE53FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI.ViewModel", "UI\ViewModel\UI.ViewModel.csproj", "{55FF2027-1864-46C6-848E-2901D5EE53FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{38E2A04E-7860-4D4D-BDFB-E7A76F59DA01}"
 EndProject
@@ -45,6 +45,6 @@ Global
 		{CFC62657-3094-4BC2-9263-D201A528ACB4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = UI\UI\UI.csproj
+		StartupItem = UI\UI\UI.UI.csproj
 	EndGlobalSection
 EndGlobal

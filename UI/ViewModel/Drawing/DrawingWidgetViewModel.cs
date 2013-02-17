@@ -95,18 +95,10 @@ namespace ViewModel
 			
 			if (IsClicked && selectedTool == ToolBarViewModel.Tools.SELECTION) 
 			{
-
 				_model.ActivePoint.X = _mouseX;
 				_model.ActivePoint.Y = _mouseY;
 				_model.ActiveObject.CalcCenterOfMass();
-
-			} else {
-
-				_model.ActivePoint = _model._spatialTree.GetClosestPoint (MousePos);
-				if (_model.ActivePoint != null && _model.PointToParent.ContainsKey (_model.ActivePoint))
-					_model.ActiveObject = _model.PointToParent [_model.ActivePoint];
-
-			}
+			} 
 
 			VMMessenger.getMessenger().sendMessage<RequestRedrawMessage>(new RequestRedrawMessage());
 			VMMessenger.getMessenger().sendMessage<UpdatePositionStatusMessage>(new UpdatePositionStatusMessage(_mouseX, _mouseY));
@@ -140,7 +132,10 @@ namespace ViewModel
 				switch (selectedTool) {
 				case ToolBarViewModel.Tools.SELECTION:
 					IsClicked = true;
-
+					
+					_model.ActivePoint = _model.SpatialTree.GetClosestPoint (MousePos);
+					if (_model.ActivePoint != null && _model.PointToParent.ContainsKey (_model.ActivePoint))
+						_model.ActiveObject = _model.PointToParent [_model.ActivePoint];
 					break;
 
 				case ToolBarViewModel.Tools.FORCE:
