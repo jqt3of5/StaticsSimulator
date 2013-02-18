@@ -11,22 +11,22 @@
     <AssemblyName>Controllers</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>True</DebugSymbols>
+    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>False</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>..\..\bin</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>False</ConsolePause>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
-    <Optimize>False</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>..\..\bin</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>False</ConsolePause>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -43,9 +43,9 @@
     <None Include="BeamController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Data\Core.Data.csproj">
-      <Project>{CFC62657-3094-4BC2-9263-D201A528ACB4}</Project>
-      <Name>Core.Data</Name>
+    <ProjectReference Include="..\Core.csproj">
+      <Project>{38E2A04E-7860-4D4D-BDFB-E7A76F59DA01}</Project>
+      <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

@@ -31,7 +31,8 @@ namespace ViewModel
 		public List<DrawingObject> ObjectsToDraw {
 			get { return _model.Objects;}
 		}
-
+		
+		public bool IsJoiningPoints {get; private set;}
 	
 		public DrawingObject ActiveObject { get { return _model.ActiveObject; } }
 		public PointDouble ActivePoint { get { return _model.ActivePoint; } private set { _model.ActivePoint = value; } }
@@ -81,7 +82,13 @@ namespace ViewModel
 			_model.commitTemporaryObject ();
 			VMMessenger.getMessenger().sendMessage(new UpdateStatusMessage("Finished drawing body"));
 		}
-		
+		private void GrabActiveObject()
+		{
+			_model.ActivePoint = _model.SpatialTree.GetClosestPoint (MousePos);
+			if (_model.ActivePoint != null && _model.PointToParent.ContainsKey (_model.ActivePoint))
+				_model.ActiveObject = _model.PointToParent [_model.ActivePoint];
+			
+		}
 		#endregion
 		
 		#region Event Handlers (Main View interface)
@@ -99,7 +106,8 @@ namespace ViewModel
 				_model.ActivePoint.Y = _mouseY;
 				_model.ActiveObject.CalcCenterOfMass();
 			} 
-
+			
+			
 			VMMessenger.getMessenger().sendMessage<RequestRedrawMessage>(new RequestRedrawMessage());
 			VMMessenger.getMessenger().sendMessage<UpdatePositionStatusMessage>(new UpdatePositionStatusMessage(_mouseX, _mouseY));
 
@@ -133,20 +141,40 @@ namespace ViewModel
 				case ToolBarViewModel.Tools.SELECTION:
 					IsClicked = true;
 					
-					_model.ActivePoint = _model.SpatialTree.GetClosestPoint (MousePos);
-					if (_model.ActivePoint != null && _model.PointToParent.ContainsKey (_model.ActivePoint))
-						_model.ActiveObject = _model.PointToParent [_model.ActivePoint];
+					GrabActiveObject();
 					break;
-
+					
+				case ToolBarViewModel.Tools.JOINT:
+					if (!IsJoiningPoints)	
+					{
+						IsJoiningPoints = true;
+						GrabActiveObject();
+						
+					}
+					else
+					{
+						IsJoiningPoints = false;
+						var point1 = ActivePoint;
+						var body1 = ActiveObject;
+						
+						GrabActiveObject();
+						
+						_model.Controller.AddJoint(point1, ActivePoint);
+					}
+					break;
+					
 				case ToolBarViewModel.Tools.FORCE:
 					//popup dialog that asks for mag/dir
 					dialogModel = new DoubleInputModel(2, new string[]{"Angle", "Magnitude"}); 
 					dialogView = new DoubleInputView(dialogModel);
 					dialogView.ShowAll();
 					dialogView.Run();
-
+					
+					GrabActiveObject();
 					if (ActiveObject != null && dialogModel._inputs != null)
 						ActiveObject.AddForce (new Tuple<PointDouble,double, double> (ActivePoint,dialogModel._inputs[0],dialogModel._inputs[1]));
+					//_model.Controller.AddForce(new Tuple<PointDouble,double, double> (ActivePoint,dialogModel._inputs[0],dialogModel._inputs[1]));
+					
 					break;
 					
 				case ToolBarViewModel.Tools.MOMENT:
@@ -155,9 +183,12 @@ namespace ViewModel
 					dialogView = new DoubleInputView(dialogModel);
 					dialogView.ShowAll();
 					dialogView.Run();
-
+					
+					GrabActiveObject();
+					
 					if (ActiveObject != null && dialogModel._inputs != null)
 						ActiveObject.AddMoment (new Tuple<PointDouble,double> (ActivePoint,dialogModel._inputs[0]));
+					//_model.Controller.AddForce(new Tuple<PointDouble,double> (ActivePoint,dialogModel._inputs[0]));
 					
 					break;
 					

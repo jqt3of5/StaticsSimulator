@@ -7,11 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Data", "Core\Data\Core
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Messenger", "Core\Messenger\Core.Messenger.csproj", "{4C336EB8-2CC3-487C-AAD1-4A5B17688382}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI.UI", "UI\UI\UI.UI.csproj", "{83702612-BCC1-477C-A7B6-5A1A00281B5D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI.ViewModel", "UI\ViewModel\UI.ViewModel.csproj", "{55FF2027-1864-46C6-848E-2901D5EE53FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{38E2A04E-7860-4D4D-BDFB-E7A76F59DA01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI.View", "UI\UI\UI.View\UI.View.csproj", "{DD9EAB47-0D1E-4FDD-A6DC-E98643BF23CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,16 +35,16 @@ Global
 		{55FF2027-1864-46C6-848E-2901D5EE53FD}.Debug|x86.Build.0 = Debug|Any CPU
 		{55FF2027-1864-46C6-848E-2901D5EE53FD}.Release|x86.ActiveCfg = Release|Any CPU
 		{55FF2027-1864-46C6-848E-2901D5EE53FD}.Release|x86.Build.0 = Release|Any CPU
-		{83702612-BCC1-477C-A7B6-5A1A00281B5D}.Debug|x86.ActiveCfg = Debug|x86
-		{83702612-BCC1-477C-A7B6-5A1A00281B5D}.Debug|x86.Build.0 = Debug|x86
-		{83702612-BCC1-477C-A7B6-5A1A00281B5D}.Release|x86.ActiveCfg = Release|x86
-		{83702612-BCC1-477C-A7B6-5A1A00281B5D}.Release|x86.Build.0 = Release|x86
 		{CFC62657-3094-4BC2-9263-D201A528ACB4}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{CFC62657-3094-4BC2-9263-D201A528ACB4}.Debug|x86.Build.0 = Debug|Any CPU
 		{CFC62657-3094-4BC2-9263-D201A528ACB4}.Release|x86.ActiveCfg = Release|Any CPU
 		{CFC62657-3094-4BC2-9263-D201A528ACB4}.Release|x86.Build.0 = Release|Any CPU
+		{DD9EAB47-0D1E-4FDD-A6DC-E98643BF23CA}.Debug|x86.ActiveCfg = Debug|x86
+		{DD9EAB47-0D1E-4FDD-A6DC-E98643BF23CA}.Debug|x86.Build.0 = Debug|x86
+		{DD9EAB47-0D1E-4FDD-A6DC-E98643BF23CA}.Release|x86.ActiveCfg = Release|x86
+		{DD9EAB47-0D1E-4FDD-A6DC-E98643BF23CA}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = UI\UI\UI.UI.csproj
+		StartupItem = UI\UI\UI.View\UI.View.csproj
 	EndGlobalSection
 EndGlobal
