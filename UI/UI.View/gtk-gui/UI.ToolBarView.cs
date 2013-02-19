@@ -12,6 +12,7 @@ namespace UI
 		private global::Gtk.RadioAction momentTool;
 		private global::Gtk.RadioAction forceTool;
 		private global::Gtk.RadioAction selectionTool;
+		private global::Gtk.RadioAction jointTool;
 		private global::Gtk.Toolbar toolbar4;
 		
 		protected virtual void Build ()
@@ -38,21 +39,24 @@ namespace UI
 			this.unconnectedTool.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Unconencted");
 			w2.Add (this.unconnectedTool, null);
 			this.momentTool = new global::Gtk.RadioAction ("momentTool", global::Mono.Unix.Catalog.GetString ("_Moment"), null, "gtk-refresh", 0);
-			this.momentTool.Group = this.connectedTool.Group;
+			this.momentTool.Group = this.unconnectedTool.Group;
 			this.momentTool.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Moment");
 			w2.Add (this.momentTool, null);
 			this.forceTool = new global::Gtk.RadioAction ("forceTool", global::Mono.Unix.Catalog.GetString ("_Force"), null, "gtk-redo", 0);
-			this.forceTool.Group = this.connectedTool.Group;
+			this.forceTool.Group = this.unconnectedTool.Group;
 			this.forceTool.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Force");
 			w2.Add (this.forceTool, null);
 			this.selectionTool = new global::Gtk.RadioAction ("selectionTool", global::Mono.Unix.Catalog.GetString ("_Selection"), null, "gtk-add", 0);
-			this.selectionTool.Group = this.connectedTool.Group;
+			this.selectionTool.Group = this.unconnectedTool.Group;
 			this.selectionTool.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Selection");
 			w2.Add (this.selectionTool, null);
+			this.jointTool = new global::Gtk.RadioAction ("jointTool", null, null, "gtk-home", 0);
+			this.jointTool.Group = this.unconnectedTool.Group;
+			w2.Add (this.jointTool, null);
 			this.UIManager.InsertActionGroup (w2, 0);
 			this.Name = "UI.ToolBarView";
 			// Container child UI.ToolBarView.Gtk.Container+ContainerChild
-			this.UIManager.AddUiFromString (@"<ui><toolbar name='toolbar4'><toolitem name='connectedTool' action='connectedTool'/><toolitem name='unconnectedTool' action='unconnectedTool'/><toolitem name='momentTool' action='momentTool'/><toolitem name='forceTool' action='forceTool'/><toolitem name='selectionTool' action='selectionTool'/></toolbar></ui>");
+			this.UIManager.AddUiFromString ("<ui><toolbar name='toolbar4'><toolitem name='connectedTool' action='connectedTool'/><toolitem name='unconnectedTool' action='unconnectedTool'/><toolitem name='momentTool' action='momentTool'/><toolitem name='forceTool' action='forceTool'/><toolitem name='selectionTool' action='selectionTool'/><toolitem name='jointTool' action='jointTool'/></toolbar></ui>");
 			this.toolbar4 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget ("/toolbar4")));
 			this.toolbar4.Name = "toolbar4";
 			this.toolbar4.ShowArrow = false;

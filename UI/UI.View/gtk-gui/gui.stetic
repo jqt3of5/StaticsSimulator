@@ -5,9 +5,10 @@
     <target-gtk-version>2.12</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="../../../bin/ViewModel.dll" />
-    <widget-library name="../../../bin/Core.dll" />
-    <widget-library name="../../../bin/UI.exe" internal="true" />
+    <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <widget-library name="../../../../bin/ViewModel.dll" />
+    <widget-library name="../../../../bin/Core.dll" />
+    <widget-library name="../bin/Debug/UI.View.exe" internal="true" />
   </import>
   <widget class="Gtk.Window" id="MainWindow" design-size="480 360">
     <action-group name="Default">
@@ -294,6 +295,15 @@
         <property name="Value">0</property>
         <property name="Group">group1</property>
       </action>
+      <action id="jointTool">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-home</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Visible">False</property>
@@ -307,6 +317,7 @@
           <node type="Toolitem" action="momentTool" />
           <node type="Toolitem" action="forceTool" />
           <node type="Toolitem" action="selectionTool" />
+          <node type="Toolitem" action="jointTool" />
         </node>
       </widget>
     </child>

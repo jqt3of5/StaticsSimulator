@@ -20,6 +20,7 @@ namespace UI
 			forceTool.Changed += ToolSelected;
 			momentTool.Changed += ToolSelected; 
 			selectionTool.Changed += ToolSelected; 
+			jointTool.Changed += ToolSelected;
 		}	
 		
 		private void ToolSelected(object sender, ChangedArgs args)
@@ -36,6 +37,8 @@ namespace UI
 				viewModel.selectedTool = ToolBarViewModel.Tools.MOMENT;
 			else if (tbButton == selectionTool && tbButton.Active)
 				viewModel.selectedTool = ToolBarViewModel.Tools.SELECTION;
+			else if (tbButton == jointTool && tbButton.Active)
+				viewModel.selectedTool = ToolBarViewModel.Tools.JOINT;
 			 
 		}
 		
